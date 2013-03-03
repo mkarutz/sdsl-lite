@@ -373,6 +373,8 @@ class wt_huff
         }
 
 #ifdef __SSE4_2__
+        /* detects runs in a 64 symbol block. the beginning of each run
+           is marked with a one bit in the 64bit word mask */
         uint64_t mark_runs(const uint8_t* buf) {
             uint64_t mask = 0;
             uint16_t* mask16 = (uint16_t*)&mask;
@@ -451,6 +453,7 @@ class wt_huff
                     } else { // mask contains all runs in the block marked with a one bit
                         size_t num_runs = bit_magic::b1Cnt(mask);
                         if (num_runs < 32) {
+                            /* if there are runs we process using i1BP */
                             int8_t prev_pos = -1;
                             int8_t cur = 1;
                             while (num_runs) { // iterate over all runs and add them to the wt
