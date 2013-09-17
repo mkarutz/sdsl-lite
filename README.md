@@ -27,8 +27,7 @@ data structure which are
   * Easy and intuitive to use (like the [STL][STL], which provides classical data structures),
   * Faithful to the original theoretical results.
   * Capable of handling large inputs (yes, we support 64-bit),
-  * Provide excellent performance in construction, and
-  * Provide good run-time performance
+  * Provide efficient construction of all implemented succinct data structures, while at the same time enable good run-time performance.
 
 <img align="right" src="extras/example-storage-visualization-smaller.png?raw=true" />
 
@@ -36,12 +35,17 @@ In addition we provide additional functionality which can help you use succinct
 data structure to their full potential.
 
   * Each data structure can easily be serialized and loaded to/from disk.
-  * We provide functionality which helps analyze the storage requirements of any
+  * We provide functionality which helps you analyze the storage requirements of any
   SDSL based data structure.
   * All implemented data structures are composable. For example, a compressed
   suffix tree can be composed of a variety different, smaller succinct data structures.
   We provide an intiuitive template interface to declare the succinct data structure
   you want to use.
+  * We maintain an extensive collection of examples which help you use the different
+  features provided by the library.
+  * All data structures are tested for correctness using a unit-testing framework.
+  * We provide a large collection of supporting documentation constisting of examples,
+    cheat sheets, tutorial slides and walkthroughs.
 
 The Latest Version
 ------------------
