@@ -47,79 +47,20 @@ data structure to their full potential.
   * We provide a large collection of supporting documentation constisting of examples,
     cheat sheets, tutorial slides and walkthroughs.
 
-List of Implemented Data Structures
---------
+The library contains many succinct data structures from the following categories:
 
- * Bitvectors
-   * An uncompressed mutual bitvector (`bit_vector`)
-   * An uncompressed immutable bitvector ([bit_vector_il](./include/sdsl/bit_vector_il.hpp))
-   * A ![H_0](http://latex.codecogs.com/gif.latex?H_0)-compressed
-     immutable bitvector ([rrr_vector<>](./include/sdsl/rrr_vector.hpp))
-   * A bitvector for sparse populated arrays ([sd_vector<>](./include/sdsl/sd_vector.hpp))
- * Rank Support (RS) and Select Support (SS)
-   * Several rank and select implementations with different time-space
-     trade-offs for the uncompressed bitvectors
-     ([rank_support_v](./include/sdsl/rank_support_v.hpp),
-      [rank_support_v5](./include/sdsl/ran_support_v5.hpp),
-      [select_support_mcl](./include/sdsl/select_support_mcl.hpp), ...)
-   * Rank and select for compressed bitvectors
-     ([rank_support_rrr](./include/sdsl/rrr_vector.hpp),
-      [rank_support_sd](./include/sdsl/sd_vector.hpp), ...)
+ * Bitvectors supporting Rank and Select
  * Variable-length Coders
-   * Elias- ![\delta](http://latex.codecogs.com/gif.latex?%5Cdelta) coder
-     ([coder::elias_delta](./include/sdsl/coder_elias_delta.hpp))
-   * Fibonacci-coder ([coder::fibonacci](./include/sdsl/coder_fibonacci.hpp))
  * Integer Vectors
-   * Mutable vectors for (compile-time) fixed `w`-bit integers ([int_vector<w>](./include/sdsl/int_vector.hpp))
-   * Mutable vector for (run-time) fixed `w`-bit integers ([int_vector<0>](./include/sdsl/int_vector.hpp),
-     `w` passed to the constructor)
-   * Immutable compressed integer vectors using a variable-length coder `coder`
-     ([enc_vector<coder>](./include/sdsl/enc_vector.hpp),
-     [vlc_vector<coder>](./include/sdsl/vlc_vector.hpp))
- * Wavelet Trees (WT) (all immutable)
-   * Balanced wavelet tree for a byte-alphabet ([wt](./include/sdsl/wt.hpp))
-   * Balanced wavelet tree for a integer-alphabet ([wt_int](./include/sdsl/wt_int.hpp))
-   * Huffman-shaped wavelet tree for a byte-alphabet ([wt_huff](./include/sdsl/wt_huff.hpp))
-   * Run-length compressed wavelet trees for a byte-alphabet
-     ([wt_rlmn](./include/sdsl/wt_rlmn.hpp),
-      [wt_rlg](./include/sdsl/wt_rlg.hpp),
-      [wt_rlg8](./include/sdsl/wt_rlg8.hpp))
- * Compressed Suffix Arrays (CSA) (all immutable)
-   * [csa_bitcompressed](./include/sdsl/csa_bitcompressed.hpp) is based on the bitcompressed SA and inverse SA.
-   * [csa_wt](./include/sdsl/csa_wt.hpp) is based on a WT of the BWT.
-   * [csa_sada](./include/sdsl/csa_sada.hpp) is based on the compressed
-      ![\Psi](http://latex.codecogs.com/gif.latex?%5CPsi)-function
- * Balanced Parentheses Support (BPS) (all immutable)
-   * A range-min-max-tree implementation ([bp_support_sada](./include/sdsl/bp_support_sada.hpp))
-     to support operations `find_open`, `find_close`, `enclose`, `double_enclose`,...
-   * Hierarchical solutions with pioneer parentheses
-     ([bp_support_g](./include/sdsl/bp_support_g.hpp),
-      [bp_support_gg](./include/sdsl/bp_support_gg.hpp))
- * Longest Common Prefix (LCP) Arrays (all immutable)
-   * [lcp_bitcompressed](./include/sdsl/lcp_bitcompressed.hpp) is a bitcompressed version
-   * [lcp_byte](./include/sdsl/lcp_byte.hpp) encodes small values with one
-     byte and large values with two words
-   * [lcp_dac](./include/sdsl/lcp_dac.hpp) used direct accessible codes
-   * [lcp_wt](./include/sdsl/lcp_wt.hpp) stores small values in a WT and
-     large value in on word.
-   * [lcp_vlc](./include/sdsl/lcp_vlc.hpp) stores the values in a `vlc_vector`.
-   * [lcp_support_sada](./include/sdsl/lcp_support_sada.hpp) uses a bitvector of 2n bits, a
-     select structure supporting it, and the corresponding CSA.
-   * [lcp_support_tree](./include/sdsl/lcp_support_tree.hpp) uses the topology of the
-     corresponding CST.
-   * [lcp_support_tree2](./include/sdsl/lcp_support_tree2.hpp) uses the corresponding CSA
-   and CST.
- * Compressed Suffix Trees (CST) (all immutable)
-   * [cst_sada](./include/sdsl/cst_sada.hpp) provides very fast navigation operations; worst case
-     space |CSA|+|LCP|+4n+o(n)
-   * [cst_sct3](./include/sdsl/cst_sct3.hpp) representing nodes as intervals in the suffix array;
-     worst case space |CSA|+|LCP|+3n+o(n)
- * Range Minimum/Maximum Query (RMQ) Structures (all immutable)
-   * Self-contained RMQ structure using 2n+o(n) bits or 4n+o(n) bits
-     ([rmq_succinct_sct](./include/sdsl/rmq_succinct_sct.hpp),
-      [rmq_succinct_sada](./include/sdsl/rmq_succinct_sada.hpp))
-   * Non-succinct support structure for RMQ ([rmq_support_sparse_table](./include/sdsl/rmq_support_sparse_table.hpp))
+ * Wavelet Trees (WT)
+ * Compressed Suffix Arrays (CSA)
+ * Balanced Parentheses Representations
+ * Longest Common Prefix (LCP) Arrays
+ * Compressed Suffix Trees (CST)
+ * Range Minimum/Maximum Query (RMQ) Structures
+ * LOUDS tree representations
 
+For more information see the documentation.
 
 The Latest Version
 ------------------
