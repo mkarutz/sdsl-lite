@@ -62,13 +62,21 @@ The library contains many succinct data structures from the following categories
 
 For more information see the documentation.
 
-The Latest Version
-------------------
-
-The latest version can be found on the SDSL github project page https://github.com/simongog/sdsl-lite .
-
 Documentation
 -------------
+
+We provide an extensive set of documentation describing all data structures
+and features provided by the library. Specifically we provide
+
+* A cheat sheet which succinctly describes the usage of the library.
+* A set of [example](examples/) programs demonstrating how different features
+of the library are used.
+* A wiki page describing the implemented data structures and their respective
+C++ classes.
+* A tutorial presentation demonstrating all features of the library in a
+step-by-step walk-through.
+* [Unit Tests](test/) which display how a small code snippet used to test each
+library feature.
 
 Requirements
 ------------
@@ -118,6 +126,12 @@ While we use an extensive set of unit tests and test coverage tools you might
 still find bugs in the library. We encourage you to report any problems with
 the library via the [github issue tracking system](https://github.com/simongog/sdsl-lite/issues)
 of the project.
+
+The Latest Version
+------------------
+
+The latest version can be found on the SDSL github project page https://github.com/simongog/sdsl-lite .
+
 
 Licensing
 ---------
