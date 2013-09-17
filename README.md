@@ -25,11 +25,23 @@ Specifically, the aim of the library is to provide basic and complex succinct
 data structure which are
 
   * Easy and intuitive to use (like the [STL][STL], which provides classical data structures),
+  * Faithful to the original theoretical results.
   * Capable of handling large inputs (yes, we support 64-bit),
   * Provide excellent performance in construction, and
   * Provide good run-time performance
 
 <img align="right" src="extras/example-storage-visualization-smaller.png?raw=true" />
+
+In addition we provide additional functionality which can help you use succinct
+data structure to their full potential.
+
+  * Each data structure can easily be serialized and loaded to/from disk.
+  * We provide functionality which helps analyze the storage requirements of any
+  SDSL based data structure.
+  * All implemented data structures are composable. For example, a compressed
+  suffix tree can be composed of a variety different, smaller succinct data structures.
+  We provide an intiuitive template interface to declare the succinct data structure
+  you want to use.
 
 The Latest Version
 ------------------
