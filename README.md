@@ -37,6 +37,8 @@ data structure to their full potential.
   * Each data structure can easily be serialized and loaded to/from disk.
   * We provide functionality which helps you analyze the storage requirements of any
   SDSL based data structure.
+  * We support features such as hugepages and tracking the memory usage of each
+  SDSL data structure.
   * All implemented data structures are composable. For example, a compressed
   suffix tree can be composed of a variety different, smaller succinct data structures.
   We provide an intiuitive template interface to declare the succinct data structure
@@ -113,8 +115,32 @@ To remove the library from your system use the provided uninstall script:
 ./uninstall.sh
 ```
 
-Examples
+Getting Started
 ------------
+
+To get you started with the library you can start by compiling the following
+program which constructs a compressed suffix tree (CST) over the
+text `mississippi` and stores the data structure to the file `cst-file.sdsl`:
+
+```cpp
+#include <sdsl/suffix_trees.hpp>
+
+int main() {
+  sdsl::cst_sct3<> cst;
+  sdsl::construct_im(cst, "mississippi!", 1);
+  sdsl::store_to_file(cst,"cst-file.sdsl");
+  return 1;
+}
+```
+
+To compile the program using `g++` run:
+
+```sh
+g++ -std=c++11 -O3 -I ~/include -L ~/lib program.cpp -o lsdsl
+```
+
+Next we suggest you use the excellent tutorial of Simon Gog which describes
+all major data structures of the library.
 
 Test
 ----
