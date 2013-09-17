@@ -29,6 +29,7 @@ data structure which are
   * Provide excellent performance in construction, and
   * Provide good run-time performance
 
+![Image](extras/example-storage-visualization-small.png?raw=true)
 
 The Latest Version
 ------------------
@@ -96,7 +97,7 @@ more information see the COPYING file in the library directory.
 Lots of time was spent implementing the many features of the library. If you
 use the library in an academic setting please cite the following paper:
 
-_Simon Gog, Matthias Petri: Optimized Succinct Data Structures for Massive Data, Accepted for publication in Software, Practice and Experience_. **TODO**
+_Simon Gog, Matthias Petri: Optimized Succinct Data Structures for Massive Data, Accepted for publication in Software, Practice and Experience_. **TODO LIBRARY PAPER**
 
 Authors
 --------
