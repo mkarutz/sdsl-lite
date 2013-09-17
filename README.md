@@ -30,6 +30,7 @@ data structure which are
   * Provide good run-time performance
 
 ![Space Visualization](extras/example-storage-visualization-smaller.png?raw=true)
+![Space Visualization](extras/example-storage-visualization-smaller.png?raw=true)
 
 The Latest Version
 ------------------
