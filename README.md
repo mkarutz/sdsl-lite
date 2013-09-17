@@ -41,12 +41,12 @@ data structure to their full potential.
   SDSL data structure.
   * All implemented data structures are composable. For example, a compressed
   suffix tree can be composed of a variety different, smaller succinct data structures.
-  We provide an intiuitive template interface to declare the succinct data structure
+  We provide an intuitive template interface to declare the succinct data structure
   you want to use.
   * We maintain an extensive collection of examples which help you use the different
   features provided by the library.
   * All data structures are tested for correctness using a unit-testing framework.
-  * We provide a large collection of supporting documentation constisting of examples,
+  * We provide a large collection of supporting documentation consisting of examples,
     cheat sheets, tutorial slides and walkthroughs.
 
 The library contains many succinct data structures from the following categories:
@@ -93,7 +93,7 @@ The SDSL library requires:
 Installation
 ------------
 
-To download and install the libary use the following commands.
+To download and install the library use the following commands.
 
 ```sh
 git clone https://github.com/simongog/sdsl-lite.git
