@@ -119,6 +119,19 @@ Examples
 Test
 ----
 
+The [test](./test) directory contains test code for many library
+structures. We use [googletest][GTEST] framework and [make][MAKE]
+to run the tests. See the README file in the directory for details.
+
+To simply run all unit tests type
+
+```sh
+cd sdsl-lite/test
+make
+```
+
+Note: Running the tests requires several sample files to be downloaded from the web.
+
 Bug Reporting
 ------------
 
@@ -143,6 +156,19 @@ Lots of time was spent implementing the many features of the library. If you
 use the library in an academic setting please cite the following paper:
 
 _Simon Gog, Matthias Petri: Optimized Succinct Data Structures for Massive Data, Accepted for publication in Software, Practice and Experience_. **TODO LIBRARY PAPER**
+
+## External Resources used in SDSL
+
+We have included the code of two excellent suffix array
+construction algorithms.
+
+* Yuta Mori's incredible fast suffix [libdivsufsort][DIVSUF]
+  algorithm (version 2.0.1) for byte-alphabets.
+* An adapted version of Jesper Larsson's implementation of the
+  algorithm of [Larson and Sadakane][LS] for integer-alphabets.
+
+Additionally, we use the [googletest][GTEST] framework to provide unit tests.
+Our visualizations are implemented using the [d3js][d3js]-library.
 
 Authors
 --------
