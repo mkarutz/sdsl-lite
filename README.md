@@ -29,7 +29,7 @@ data structure which are
   * Provide excellent performance in construction, and
   * Provide good run-time performance
 
-![Image](extras/example-storage-visualization-small.png?raw=true)
+<img style="float:right;" src="extras/example-storage-visualization-small.png?raw=true"/>
 
 The Latest Version
 ------------------
