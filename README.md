@@ -129,8 +129,7 @@ stores the data structure to the file `fm_index-file.sdsl`:
 int main() {
   sdsl::csa_wt<> fm_index;
   sdsl::construct_im(fm_index, "mississippi!", 1);
-  std::string p = "si";
-  std::cout << "'" << p << "' occurs " << sdsl::count(fm_index,p.begin(),p.end()) << " times.\n";
+  std::cout << "'si' occurs " << sdsl::count(fm_index,"si") << " times.\n";
   sdsl::store_to_file(fm_index,"fm_index-file.sdsl");
 }
 ```
