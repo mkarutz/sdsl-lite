@@ -63,7 +63,8 @@ The library contains many succinct data structures from the following categories
  * Range Minimum/Maximum Query (RMQ) Structures
 
 For a complete overview including theoretical bounds see the
-[cheat sheet](extras/cheatsheet/sdsl-cheatsheet.pdf?raw=true).
+[cheat sheet](extras/cheatsheet/sdsl-cheatsheet.pdf?raw=true) or the
+[wiki](https://github.com/simongog/sdsl-lite/wiki/List-of-Implemented-Data-Structures).
 
 Documentation
 -------------
