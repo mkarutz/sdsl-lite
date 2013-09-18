@@ -141,15 +141,18 @@ To compile the program using `g++` run:
 g++ -std=c++11 -O3 -I ~/include -L ~/lib program.cpp -o lsdsl
 ```
 
-Next we suggest you use the excellent tutorial of Simon Gog which describes
-all major data structures of the library.
+Next we suggest you look at the excellent [tutorial](url) of Simon Gog which describes
+all major features of the library or look at some of the provided [examples](examples).
 
 Test
 ----
 
-The [test](./test) directory contains test code for many library
-structures. We use [googletest][GTEST] framework and [make][MAKE]
-to run the tests. See the README file in the directory for details.
+Implementing succinct data structures can be tricky. To ensure that all data
+structures behave as expected, we created a large collection of unit tests
+which can be used to check the correctness of the library on your computer.
+The [test](./test) directory contains test code. We use [googletest][GTEST]
+framework and [make][MAKE] to run the tests. See the README file in the
+directory for details.
 
 To simply run all unit tests type
 
@@ -158,7 +161,8 @@ cd sdsl-lite/test
 make
 ```
 
-Note: Running the tests requires several sample files to be downloaded from the web.
+Note: Running the tests requires several sample files to be downloaded from the web
+and can take up to 2 hours on slow machines.
 
 Bug Reporting
 ------------
@@ -173,6 +177,9 @@ The Latest Version
 
 The latest version can be found on the SDSL github project page https://github.com/simongog/sdsl-lite .
 
+If you are running experiments in an academic settings we suggest you use the
+most recent [released](https://github.com/mpetri/sdsl-lite/releases) version
+of the library. This allows others to reproduce your experiments exactly.
 
 Licensing
 ---------
