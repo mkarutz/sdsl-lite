@@ -69,7 +69,7 @@ Documentation
 We provide an extensive set of documentation describing all data structures
 and features provided by the library. Specifically we provide
 
-* A [cheat sheet](extras/cheetsheet/cheetsheet.pdf?raw=true) which succinctly
+* A [cheat sheet](extras/cheetsheet/sdsl-cheetsheet.pdf?raw=true) which succinctly
 describes the usage of the library.
 * A set of [example](examples/) programs demonstrating how different features
 of the library are used.
