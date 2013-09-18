@@ -25,7 +25,7 @@ Specifically, the aim of the library is to provide basic and complex succinct
 data structure which are
 
   * Easy and intuitive to use (like the [STL][STL], which provides classical data structures),
-  * Faithful to the original theoretical results.
+  * Faithful to the original theoretical results,
   * Capable of handling large inputs (yes, we support 64-bit),
   * Provide efficient construction of all implemented succinct data structures, while at the same time enable good run-time performance.
 
@@ -36,7 +36,7 @@ data structure to their full potential.
 
   * Each data structure can easily be serialized and loaded to/from disk.
   * We provide functionality which helps you analyze the storage requirements of any
-  SDSL based data structure.
+  SDSL based data structure (see left)
   * We support features such as hugepages and tracking the memory usage of each
   SDSL data structure.
   * All implemented data structures are composable. For example, a compressed
@@ -73,8 +73,8 @@ and features provided by the library. Specifically we provide
 * A cheat sheet which succinctly describes the usage of the library.
 * A set of [example](examples/) programs demonstrating how different features
 of the library are used.
-* A wiki page describing the implemented data structures and their respective
-C++ classes.
+* A [wiki](https://github.com/simongog/sdsl-lite/wiki) page describing the
+implemented data structures and their corresponding C++ classes.
 * A tutorial presentation demonstrating all features of the library in a
 step-by-step walk-through.
 * [Unit Tests](test/) which display how a small code snippet used to test each
@@ -119,17 +119,19 @@ Getting Started
 ------------
 
 To get you started with the library you can start by compiling the following
-program which constructs a compressed suffix tree (CST) over the
-text `mississippi` and stores the data structure to the file `cst-file.sdsl`:
+sample program which constructs a compressed suffix array (a FM-Index) over the
+text `mississippi!`, counts the number of occurrences of pattern `si` and
+stores the data structure to the file `fm_index-file.sdsl`:
 
 ```cpp
-#include <sdsl/suffix_trees.hpp>
+#include <sdsl/suffix_arrays.hpp>
 
 int main() {
-  sdsl::cst_sct3<> cst;
-  sdsl::construct_im(cst, "mississippi!", 1);
-  sdsl::store_to_file(cst,"cst-file.sdsl");
-  return 1;
+  sdsl::csa_wt<> fm_index;
+  sdsl::construct_im(fm_index, "mississippi!", 1);
+  std::string p = "si";
+  std::cout << "'" << p << "' occurs " << sdsl::count(fm_index,p.begin(),p.end()) << " times.\n";
+  sdsl::store_to_file(fm_index,"fm_index-file.sdsl");
 }
 ```
 
@@ -199,10 +201,14 @@ Our visualizations are implemented using the [d3js][d3js]-library.
 Authors
 --------
 
-This project profits from excellent input of many coders. Timo Beller improved
-the construction process during the last month and Matthias Petri contributed
-new bitvectors and helped a lot in making the library more accessible. Stefan
-Arnold helped us with tricky template questions. We a grateful to Kalle Karhu,
+The main contributors to the library are:
+
+* [Simon Gog](@simongog) (Creator)
+* [Timo Beller](@tb38)
+* [Matthias Petri](@mpetri)
+
+This project further profited from excellent input of many coders. Stefan
+Arnold helped us with tricky template questions. We a also grateful to Kalle Karhu,
 Dominik Kempa, and Shanika Kuruppu for bug reports.
 
 Contribute
