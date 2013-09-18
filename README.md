@@ -51,16 +51,15 @@ data structure to their full potential.
 
 The library contains many succinct data structures from the following categories:
 
- * Bitvectors supporting Rank and Select
- * Variable-length Coders
- * Integer Vectors
- * Wavelet Trees (WT)
- * Compressed Suffix Arrays (CSA)
- * Balanced Parentheses Representations
- * Longest Common Prefix (LCP) Arrays
- * Compressed Suffix Trees (CST)
- * Range Minimum/Maximum Query (RMQ) Structures
- * LOUDS tree representations
+ * [Bitvectors](https://github.com/simongog/sdsl-lite/wiki/Bitvectors)
+ supporting [Rank and Select](https://github.com/simongog/sdsl-lite/wiki/Rank-and-Select)
+ * [Integer Vectors](https://github.com/simongog/sdsl-lite/wiki/Integer-Vectors)
+ * [Wavelet Trees](https://github.com/simongog/sdsl-lite/wiki/Wavelet-Trees)
+ * [Compressed Suffix Arrays](https://github.com/simongog/sdsl-lite/wiki/Compressed-Suffix-Arrays) (CSA)
+ * [Balanced Parentheses](https://github.com/simongog/sdsl-lite/wiki/Balanced-Parentheses-Representations) Representations
+ * [Longest Common Prefix](https://github.com/simongog/sdsl-lite/wiki/Longest-Common-Prefix-Arrays) (LCP) Arrays
+ * [Compressed Suffix Trees](https://github.com/simongog/sdsl-lite/wiki/Compressed-Suffix-Trees) (CST)
+ * [Range Minimum/Maximum Query](https://github.com/simongog/sdsl-lite/wiki/Range-Minimum-Maximum-Query-Structures) (RMQ) Structures
 
 For more information see the documentation.
 
