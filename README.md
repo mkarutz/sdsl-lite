@@ -164,6 +164,15 @@ make
 Note: Running the tests requires several sample files to be downloaded from the web
 and can take up to 2 hours on slow machines.
 
+
+Benchmarks
+----------
+
+To ensure the library runs efficiently on your system we suggest you run our
+[benchmark suite](benchmark). The benchmark suite recreates a
+popular [experimental study](http://arxiv.org/abs/0712.3360) which you can
+directly compare to the results of your benchmark run.
+
 Bug Reporting
 ------------
 
