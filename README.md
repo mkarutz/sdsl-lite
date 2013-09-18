@@ -121,7 +121,8 @@ Getting Started
 To get you started with the library you can start by compiling the following
 sample program which constructs a compressed suffix array (a FM-Index) over the
 text `mississippi!`, counts the number of occurrences of pattern `si` and
-stores the data structure to the file `fm_index-file.sdsl`:
+stores the data structure, and a space usage visualization to the
+files `fm_index-file.sdsl` and `fm_index-file.sdsl.html`:
 
 ```cpp
 #include <sdsl/suffix_arrays.hpp>
@@ -131,6 +132,7 @@ int main() {
   sdsl::construct_im(fm_index, "mississippi!", 1);
   std::cout << "'si' occurs " << sdsl::count(fm_index,"si") << " times.\n";
   sdsl::store_to_file(fm_index,"fm_index-file.sdsl");
+  sdsl::write_structure<HTML_FORMAT>(fm_index,"fm_index-file.sdsl.html");
 }
 ```
 
