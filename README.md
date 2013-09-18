@@ -70,14 +70,15 @@ Documentation
 We provide an extensive set of documentation describing all data structures
 and features provided by the library. Specifically we provide
 
-* A cheat sheet which succinctly describes the usage of the library.
+* A [cheat sheet](extras/cheetsheet/cheetsheet.pdf?raw=true) which succinctly
+describes the usage of the library.
 * A set of [example](examples/) programs demonstrating how different features
 of the library are used.
 * A [wiki](https://github.com/simongog/sdsl-lite/wiki) page describing the
 implemented data structures and their corresponding C++ classes.
-* A tutorial presentation demonstrating all features of the library in a
-step-by-step walk-through.
-* [Unit Tests](test/) which display how a small code snippet used to test each
+* A tutorial [presentation](extras/) with the [example code](tutorial/) using in the
+sides demonstrating all features of the library in a step-by-step walk-through.
+* [Unit Tests](test/) which contain small code snippets used to test each
 library feature.
 
 Requirements
