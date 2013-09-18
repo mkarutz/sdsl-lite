@@ -219,8 +219,8 @@ Authors
 
 The main contributors to the library are:
 
-* [Simon Gog](https://github.com/simongog) (Creator)
 * [Timo Beller](https://github.com/tb38)
+* [Simon Gog](https://github.com/simongog) (Creator)
 * [Matthias Petri](https://github.com/mpetri)
 
 This project further profited from excellent input of many coders. Stefan
