@@ -203,9 +203,9 @@ Authors
 
 The main contributors to the library are:
 
-* [Simon Gog](@simongog) (Creator)
-* [Timo Beller](@tb38)
-* [Matthias Petri](@mpetri)
+* [Simon Gog](https://github.com/simongog) (Creator)
+* [Timo Beller](https://github.com/tb38)
+* [Matthias Petri](https://github.com/mpetri)
 
 This project further profited from excellent input of many coders. Stefan
 Arnold helped us with tricky template questions. We a also grateful to Kalle Karhu,
