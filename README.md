@@ -36,7 +36,7 @@ data structure to their full potential.
 
   * Each data structure can easily be serialized and loaded to/from disk.
   * We provide functionality which helps you analyze the storage requirements of any
-  SDSL based data structure (see left)
+  SDSL based data structure (see right)
   * We support features such as hugepages and tracking the memory usage of each
   SDSL data structure.
   * All implemented data structures are composable. For example, a compressed
@@ -73,9 +73,7 @@ and features provided by the library. Specifically we provide
 describes the usage of the library.
 * A set of [example](examples/) programs demonstrating how different features
 of the library are used.
-* A [wiki](https://github.com/simongog/sdsl-lite/wiki) page describing the
-implemented data structures and their corresponding C++ classes.
-* A tutorial [presentation](extras/) with the [example code](tutorial/) using in the
+* A tutorial [presentation][TUT] with the [example code](tutorial/) using in the
 sides demonstrating all features of the library in a step-by-step walk-through.
 * [Unit Tests](test/) which contain small code snippets used to test each
 library feature.
@@ -142,7 +140,7 @@ To compile the program using `g++` run:
 g++ -std=c++11 -O3 -I ~/include -L ~/lib program.cpp -o lsdsl
 ```
 
-Next we suggest you look at the excellent [tutorial](url) of Simon Gog which describes
+Next we suggest you look at the comprehensive [tutorial][TUT] of Simon Gog which describes
 all major features of the library or look at some of the provided [examples](examples).
 
 Test
