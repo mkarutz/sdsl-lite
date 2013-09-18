@@ -47,21 +47,21 @@ data structure to their full potential.
   features provided by the library.
   * All data structures are tested for correctness using a unit-testing framework.
   * We provide a large collection of supporting documentation consisting of examples,
-    cheat sheets, tutorial slides and walkthroughs.
+    cheat sheets, tutorial slides and walk-through.
 
 The library contains many succinct data structures from the following categories:
 
- * [Bitvectors](https://github.com/simongog/sdsl-lite/wiki/Bitvectors)
- supporting [Rank and Select](https://github.com/simongog/sdsl-lite/wiki/Rank-and-Select)
- * [Integer Vectors](https://github.com/simongog/sdsl-lite/wiki/Integer-Vectors)
- * [Wavelet Trees](https://github.com/simongog/sdsl-lite/wiki/Wavelet-Trees)
- * [Compressed Suffix Arrays](https://github.com/simongog/sdsl-lite/wiki/Compressed-Suffix-Arrays) (CSA)
- * [Balanced Parentheses](https://github.com/simongog/sdsl-lite/wiki/Balanced-Parentheses-Representations) Representations
- * [Longest Common Prefix](https://github.com/simongog/sdsl-lite/wiki/Longest-Common-Prefix-Arrays) (LCP) Arrays
- * [Compressed Suffix Trees](https://github.com/simongog/sdsl-lite/wiki/Compressed-Suffix-Trees) (CST)
- * [Range Minimum/Maximum Query](https://github.com/simongog/sdsl-lite/wiki/Range-Minimum-Maximum-Query-Structures) (RMQ) Structures
+ * Bitvectors supporting Rank and Select
+ * Integer Vectors
+ * Wavelet Trees
+ * Compressed Suffix Arrays (CSA)
+ * Balanced Parentheses Representations
+ * Longest Common Prefix (LCP) Arrays
+ * Compressed Suffix Trees (CST)
+ * Range Minimum/Maximum Query (RMQ) Structures
 
-For more information see the documentation.
+For a complete overview including theoretical bounds see the
+[cheat sheet](extras/cheatsheet/sdsl-cheatsheet.pdf?raw=true).
 
 Documentation
 -------------
@@ -208,7 +208,7 @@ The main contributors to the library are:
 * [Matthias Petri](https://github.com/mpetri)
 
 This project further profited from excellent input of many coders. Stefan
-Arnold helped us with tricky template questions. We a also grateful to Kalle Karhu,
+Arnold helped us with tricky template questions. We are also grateful to Kalle Karhu,
 Dominik Kempa, and Shanika Kuruppu for bug reports.
 
 Contribute
