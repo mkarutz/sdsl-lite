@@ -32,7 +32,7 @@ data structure which are
   * Provide efficient construction of all implemented succinct data structures,
   while at the same time enable good run-time performance.
 
-<img align="right" src="extras/resources/space-vis.png?raw=true" />
+<a href="extras/resources/space-vis.html?raw=true"><img align="right" src="extras/resources/space-vis.png?raw=true" /></a>
 
 In addition we provide additional functionality which can help you use succinct
 data structure to their full potential.
