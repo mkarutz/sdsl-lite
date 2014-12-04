@@ -27,20 +27,8 @@ using testing::Types;
 typedef Types<
 csa_wt<>,
        csa_sada<>,
-       csa_sada<enc_vector<coder::fibonacci>>,
-       csa_sada<enc_vector<coder::elias_gamma>>,
-       csa_wt<wt_huff<>, 8, 16, text_order_sa_sampling<>>,
-       csa_wt<wt_huff<>,32,32,fuzzy_sa_sampling<>>,
-       csa_wt<wt_huff<>,32,32,fuzzy_sa_sampling<bit_vector, bit_vector>, fuzzy_isa_sampling_support<>>,
-       csa_wt<wt_huff<>,32,32,fuzzy_sa_sampling<>, fuzzy_isa_sampling_support<>>,
-       csa_wt<wt_huff<>,32,32,text_order_sa_sampling<>,isa_sampling<>>,
-       csa_wt<wt_huff<>,32,32,text_order_sa_sampling<>,text_order_isa_sampling_support<>>,
-       csa_sada<enc_vector<>, 32,32,text_order_sa_sampling<>,isa_sampling<>>,
-       csa_sada<enc_vector<>, 32,32,text_order_sa_sampling<>,text_order_isa_sampling_support<>>,
-       csa_wt<wt_huff<>, 8, 16, sa_order_sa_sampling<>>,
-       csa_wt<wt_huff<>, 8, 16, sa_order_sa_sampling<>, isa_sampling<>, succinct_byte_alphabet<bit_vector, rank_support_v<>, select_support_mcl<>>>,
-       csa_wt<wt_huff<>, 8, 16, sa_order_sa_sampling<>, isa_sampling<>, succinct_byte_alphabet<>>,
-       csa_bitcompressed<>
+       csa_sada<optpfor_vector<128>>,
+       csa_sada<optpfor_vector<256>>
        > Implementations;
 
 TYPED_TEST_CASE(CsaByteTest, Implementations);
@@ -108,6 +96,10 @@ TYPED_TEST(CsaByteTest, IsaAccess)
         }
     }
     for (size_type j=0; j<n; ++j) {
+        if(isa[j]!=csa.isa[j]) {
+            std::cout << "should be = " << isa[j] << std::endl;
+            std::cout << "is = " << csa.isa[j] << std::endl;
+        }
         ASSERT_EQ(isa[j], csa.isa[j])<<" j="<<j;
     }
 }

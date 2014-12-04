@@ -1,6 +1,6 @@
 include ../Make.helper
-CFLAGS = $(MY_CXX_FLAGS) # in compile_options.config
-LIBS = -lsdsl -ldivsufsort -ldivsufsort64
+CFLAGS = $(MY_CXX_FLAGS) -I ../../external/FastPFor/headers/ -L ../../build/external/FastPFor # in compile_options.config
+LIBS = -lsdsl -ldivsufsort -ldivsufsort64 -lFastPFor
 SRC_DIR = src
 TMP_DIR = ../tmp
 PAT_DIR = pattern

@@ -7,4 +7,6 @@
 #include "vlc_vector.hpp"
 #include "dac_vector.hpp"
 
+#include "optpfor_vector.hpp"
+
 #endif

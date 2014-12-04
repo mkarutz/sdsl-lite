@@ -1,12 +1,14 @@
 include_directories(#"${CMAKE_CURRENT_SOURCE_DIR}/../include"
 					"${CMAKE_CURRENT_BINARY_DIR}/../include" 
 					"${CMAKE_CURRENT_BINARY_DIR}/../external/libdivsufsort-2.0.1/include" 
+					"${CMAKE_CURRENT_SOURCE_DIR}/../external/FastPFor/headers/" 
 					)
 
 
 file(GLOB libFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}  "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp") # select all .cpp-files
 
 set( sdsl_SRCS ${libFiles} )
+
 
 add_library( sdsl ${sdsl_SRCS} )
 

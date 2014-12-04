@@ -137,7 +137,7 @@ struct _hutu_shape {
                         h1->right = merge(h1->right, h2);
                         if (h1->right) h1->right->parent = h1;
 
-                        if (h1->left->rank < h1->right->rank) {
+                        if ( (h1->left->rank) < (h1->right->rank) ) {
                             heap_node<t_element>* tmp = h1->left;
                             h1->left = h1->right;
                             h1->right = tmp;

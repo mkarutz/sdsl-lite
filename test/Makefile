@@ -2,10 +2,13 @@ include ../Make.helper
 CXX_FLAGS=$(MY_CXX_FLAGS) -Wall -Werror -Wunused-parameter -g -O3 \
 		  -I$(INC_DIR) \
 		  -I../external/googletest/include \
+		  -I../external/FastPFor/headers \
 		  -L$(LIB_DIR) \
-		  -L../build/googletest/
+		  -L../build/googletest/ \
+		  -L../build/external/FastPFor/
+
 LIB_SDSL=$(LIB_DIR)/libsdsl.a
-CCLIB=-lsdsl -ldivsufsort -ldivsufsort64 -lgtest -lpthread
+CCLIB=-lsdsl -ldivsufsort -ldivsufsort64 -lgtest -lpthread -lFastPFor
 TMP_DIR=tmp
 SOURCES=$(wildcard *Test.cpp)
 EXECS=$(SOURCES:.cpp=.x)
