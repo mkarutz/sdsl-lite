@@ -28,7 +28,8 @@ typedef Types<
 csa_wt<>,
        csa_sada<>,
        csa_sada<optpfor_vector<128>>,
-       csa_sada<optpfor_vector<256>>
+       csa_sada<optpfor_vector<256>>,
+       csa_sada<bp_vector<128>>
        > Implementations;
 
 TYPED_TEST_CASE(CsaByteTest, Implementations);
@@ -96,7 +97,7 @@ TYPED_TEST(CsaByteTest, IsaAccess)
         }
     }
     for (size_type j=0; j<n; ++j) {
-        if(isa[j]!=csa.isa[j]) {
+        if (isa[j]!=csa.isa[j]) {
             std::cout << "should be = " << isa[j] << std::endl;
             std::cout << "is = " << csa.isa[j] << std::endl;
         }
