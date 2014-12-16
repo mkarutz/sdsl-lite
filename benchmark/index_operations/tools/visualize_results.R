@@ -46,7 +46,7 @@ d$space_percent <- d$spaceusage / d$textsize
 d$time_per_op <- d$value/d$iterations
 
 # plot
-plot <- ggplot(d,aes(x=space_percent,y=time_per_op,shape=class,group=class,linetype=class))
+plot <- ggplot(d,aes(x=space_percent,y=time_per_op,shape=type,group=type,linetype=type))
 plot <- plot + geom_point()
 plot <- plot + geom_line()
 plot <- plot + facet_grid(metric ~ file,scales="free_y")

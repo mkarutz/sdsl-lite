@@ -36,7 +36,6 @@ void measure_sa(const t_index& csa,const std::string& input,std::ofstream& out)
 
     out << input << ";"
         << NAME << ";"
-        << CLASS << ";"
         << t_index::sa_sample_dens << ";"
         << t_index::isa_sample_dens << ";"
         << "SA_ACCESS" << ";"
@@ -72,7 +71,6 @@ void measure_isa(const t_index& csa,const std::string& input,std::ofstream& out)
 
     out << input << ";"
         << NAME << ";"
-        << CLASS << ";"
         << t_index::sa_sample_dens << ";"
         << t_index::isa_sample_dens << ";"
         << "ISA_ACCESS" << ";"
@@ -108,7 +106,6 @@ void measure_bwt(const t_index& csa,const std::string& input,std::ofstream& out)
 
     out << input << ";"
         << NAME << ";"
-        << CLASS << ";"
         << t_index::sa_sample_dens << ";"
         << t_index::isa_sample_dens << ";"
         << "BWT_ACCESS" << ";"
@@ -144,7 +141,6 @@ void measure_psi(const t_index& csa,const std::string& input,std::ofstream& out)
 
     out << input << ";"
         << NAME << ";"
-        << CLASS << ";"
         << t_index::sa_sample_dens << ";"
         << t_index::isa_sample_dens << ";"
         << "PSI_ACCESS" << ";"

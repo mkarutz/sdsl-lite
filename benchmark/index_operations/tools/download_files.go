@@ -17,6 +17,7 @@ type TestFile struct {
 }
 
 func main() {
+	log.Printf("Download test files if they don't exist.")
 	log.Printf("Parsing test file descriptions in './config/files'")
 	testConfigFile,err := filepath.Glob("./config/files/*.json")
 	if err != nil {

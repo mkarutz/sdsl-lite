@@ -30,10 +30,6 @@ func main() {
 			log.Fatalf("test config decoding error %v",err)
 		}
 		outFileName := "../data/"+testFileDesc.Name
-		if _, err := os.Stat(outFileName); os.IsNotExist(err) {
-
-		} else {
-			fmt.Printf("%v;",outFileName)
-		}
+		fmt.Printf("%v;",outFileName)
 	}
 }

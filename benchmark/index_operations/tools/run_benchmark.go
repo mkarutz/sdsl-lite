@@ -4,11 +4,11 @@ import "os"
 import "log"
 import "path/filepath"
 import "encoding/json"
-import "flag"
 import "os/exec"
 import "time"
 import "fmt"
 import "strconv"
+import "strings"
 
 type TestFile struct {
 	Name string `json:"name"`
@@ -17,15 +17,14 @@ type TestFile struct {
 }
 
 func main() {
-	flag.Parse()
-	indexes := flag.Args()
 	resFile := fmt.Sprintf("results/results-%s.csv",time.Now().Format(time.RFC3339))
-	log.Printf("Running benchmarks for indexes %v",indexes)
+	indexBins,err := filepath.Glob("./indexes/*.idx")
+	log.Printf("Running benchmarks for indexes %v",indexBins)
 	log.Printf("Storing results to file %v",resFile)
 
 	// write result header
 	rFile, err := os.Create(resFile)
-	fmt.Fprintf(rFile,"file;type;class;sa_sample;isa_sample;metric;spaceusage;textsize;iterations;value;checksum\n")
+	fmt.Fprintf(rFile,"file;type;sa_sample;isa_sample;metric;spaceusage;textsize;iterations;value;checksum\n")
 	rFile.Close()
 
 	testConfigFile,err := filepath.Glob("./config/files/*.json")
@@ -44,27 +43,20 @@ func main() {
 		if err != nil {
 			log.Fatalf("test config decoding error %v",err)
 		}
-		outFileName := "../data/"+testFileDesc.Name
-		if _, err := os.Stat(outFileName); os.IsNotExist(err) {
-
-		} else {
-			for _,index := range indexes {
-				log.Printf("Benchmarking index '%v' for file '%v'",index,testFileDesc.Name)
-				indexFile := "indexes/"+testFileDesc.Name+"-"+index
-				if _, err := os.Stat(indexFile); os.IsNotExist(err) {
-				} else {
-					benchCmd := "bin/measure-"+index
-					numBytesStr := strconv.Itoa(testFileDesc.NumBytes)
-					cmd := exec.Command(benchCmd,indexFile,testFileDesc.Name,numBytesStr,resFile)
-					cmd.Stdout = os.Stdout
-					err := cmd.Run()
-					if err != nil {
-						log.Printf("Error benchmarking index: %v",err)
-					}
-					log.Printf("Done benchmarking index '%v'",indexFile)
-				}
+		fileIndexBins,err := filepath.Glob("./indexes/"+testFileDesc.Name+"*.idx")
+		for _,index := range fileIndexBins {
+			indexType := strings.TrimPrefix(index,"indexes/"+testFileDesc.Name+"-")
+			indexType = strings.TrimSuffix(indexType,".idx")
+			log.Printf("Benchmarking index '%v' for file '%v'",indexType,testFileDesc.Name)
+			benchCmd := "bin/measure-"+indexType+".x"
+			numBytesStr := strconv.Itoa(testFileDesc.NumBytes)
+			cmd := exec.Command(benchCmd,index,testFileDesc.Name,numBytesStr,resFile)
+			cmd.Stdout = os.Stdout
+			err := cmd.Run()
+			if err != nil {
+				log.Printf("Error benchmarking index: %v",err)
 			}
-
+			log.Printf("Done benchmarking index '%v' for file '%v'",indexType,testFileDesc.Name)
 		}
 	}
 }
