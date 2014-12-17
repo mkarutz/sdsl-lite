@@ -20,6 +20,7 @@ class int_vector_mapper
         typedef typename int_vector<t_width>::value_type value_type;
         typedef typename int_vector<t_width>::size_type size_type;
         typedef typename int_vector<t_width>::int_width_type width_type;
+        typedef typename int_vector<t_width>::const_iterator const_iterator;
     public:
         const size_type append_block_size = 1000000;
     private:
@@ -31,7 +32,8 @@ class int_vector_mapper
         std::string m_file_name;
         bool m_delete_on_close;
     private:
-        void mmap_file() {
+        void mmap_file()
+        {
             if (!(t_mode&std::ios_base::out)) {  // read only
                 m_mapped_data = (uint8_t*)mmap(NULL,
                                                m_file_size_bytes,
@@ -61,7 +63,8 @@ class int_vector_mapper
         int_vector_mapper(const int_vector_mapper&) = delete;
         int_vector_mapper& operator=(const int_vector_mapper&) = delete;
     public:
-        ~int_vector_mapper() {
+        ~int_vector_mapper()
+        {
             if (m_mapped_data) {
                 if (t_mode&std::ios_base::out) { // write was possible
                     if (m_data_offset) {
@@ -112,7 +115,8 @@ class int_vector_mapper
             m_wrapper.m_data = nullptr;
             m_wrapper.m_size = 0;
         }
-        int_vector_mapper(int_vector_mapper&& ivm) {
+        int_vector_mapper(int_vector_mapper&& ivm)
+        {
             m_wrapper.m_data = ivm.m_wrapper.m_data;
             m_wrapper.m_size = ivm.m_wrapper.m_size;
             m_wrapper.width(ivm.m_wrapper.width());
@@ -123,7 +127,8 @@ class int_vector_mapper
             ivm.m_mapped_data = nullptr;
             ivm.m_fd = -1;
         }
-        int_vector_mapper& operator=(int_vector_mapper&& ivm) {
+        int_vector_mapper& operator=(int_vector_mapper&& ivm)
+        {
             m_wrapper.m_data = ivm.m_wrapper.m_data;
             m_wrapper.m_size = ivm.m_wrapper.m_size;
             m_wrapper.width(ivm.m_wrapper.width());
@@ -140,7 +145,8 @@ class int_vector_mapper
         int_vector_mapper(const std::string filename,
                           bool is_plain = false,
                           bool delete_on_close = false) :
-            m_file_name(filename), m_delete_on_close(delete_on_close) {
+            m_file_name(filename), m_delete_on_close(delete_on_close)
+        {
             size_type size_in_bits = 0;
             uint8_t int_width = t_width;
             {
@@ -189,14 +195,17 @@ class int_vector_mapper
         }
         std::string file_name() const { return m_file_name; }
         width_type width() const { return m_wrapper.width(); }
-        void width(const uint8_t new_int_width) {
+        void width(const uint8_t new_int_width)
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'width'");
             m_wrapper.width(new_int_width);
         }
-        size_type size() const {
+        size_type size() const
+        {
             return m_wrapper.size();
         }
-        void bit_resize(const size_type bit_size) {
+        void bit_resize(const size_type bit_size)
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'bit_resize'");
             size_type new_size_in_bytes = ((bit_size + 63) >> 6) << 3;
             if (m_file_size_bytes != new_size_in_bytes + m_data_offset) {
@@ -220,7 +229,8 @@ class int_vector_mapper
         }
 
 
-        void resize(const size_type size) {
+        void resize(const size_type size)
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'resize'");
             size_type size_in_bits = size * width();
             bit_resize(size_in_bits);
@@ -256,18 +266,22 @@ class int_vector_mapper
             return m_wrapper[idx];
         }
         const uint64_t* data() const { return m_wrapper.data(); }
-        uint64_t* data() {
+        uint64_t* data()
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'data'");
             return m_wrapper.data();
         }
-        value_type get_int(size_type idx, const uint8_t len = 64) const {
+        value_type get_int(size_type idx, const uint8_t len = 64) const
+        {
             return m_wrapper.get_int(idx, len);
         }
-        void set_int(size_type idx, value_type x, const uint8_t len = 64) {
+        void set_int(size_type idx, value_type x, const uint8_t len = 64)
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'set_int'");
             m_wrapper.set_int(idx, x, len);
         }
-        void push_back(value_type x) {
+        void push_back(value_type x)
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'push_back'");
             if (capacity() < size() + 1) {
                 size_type old_size = m_wrapper.m_size;
@@ -279,32 +293,40 @@ class int_vector_mapper
             m_wrapper.m_size += width();
             m_wrapper[size()-1] = x;
         }
-        size_type capacity() const {
+        size_type capacity() const
+        {
             size_t data_size_in_bits = 8 * (m_file_size_bytes - m_data_offset);
             return data_size_in_bits / width();
         }
-        size_type bit_size() const {
+        size_type bit_size() const
+        {
             return m_wrapper.bit_size();
         }
         template<class container>
-        bool operator==(const container& v) const {
+        bool operator==(const container& v) const
+        {
             return std::equal(begin(), end(), v.begin());
         }
-        bool operator==(const int_vector<t_width>& v) const {
+        bool operator==(const int_vector<t_width>& v) const
+        {
             return m_wrapper == v;
         }
-        bool operator==(const int_vector_mapper& v) const {
+        bool operator==(const int_vector_mapper& v) const
+        {
             return m_wrapper == v.m_wrapper;
         }
         template<class container>
-        bool operator!=(const container& v) const {
+        bool operator!=(const container& v) const
+        {
             return !(*this==v);
         }
-        void flip() {
+        void flip()
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'flip'");
             m_wrapper.flip();
         }
-        bool empty() const {
+        bool empty() const
+        {
             return m_wrapper.empty();
         }
 };
@@ -313,7 +335,8 @@ template <uint8_t t_width = 0>
 class temp_file_buffer
 {
     private:
-        static std::string tmp_file(const std::string& dir) {
+        static std::string tmp_file(const std::string& dir)
+        {
             char tmp_file_name[1024] = {0};
             sprintf(tmp_file_name, "%s/tmp_mapper_file_XXXXXX.sdsl",dir.c_str());
             int fd = mkstemps(tmp_file_name,5);
@@ -324,15 +347,18 @@ class temp_file_buffer
             return std::string(tmp_file_name,strlen(tmp_file_name));
         }
     public:
-        static int_vector_mapper<t_width> create() {
+        static int_vector_mapper<t_width> create()
+        {
             auto file_name = tmp_file("/tmp");
             return create(file_name);
         }
-        static int_vector_mapper<t_width> create(const cache_config& config) {
+        static int_vector_mapper<t_width> create(const cache_config& config)
+        {
             auto file_name = tmp_file(config.dir);
             return create(file_name);
         }
-        static int_vector_mapper<t_width> create(const std::string& file_name) {
+        static int_vector_mapper<t_width> create(const std::string& file_name)
+        {
             //write empty int_vector to init the file
             int_vector<t_width> tmp_vector;
             store_to_file(tmp_vector,file_name);

@@ -35,6 +35,8 @@
 #include <iomanip>
 #include <iterator>
 
+#include "int_vector_mapper.hpp"
+
 namespace sdsl
 {
 
@@ -423,7 +425,7 @@ csa_sada<t_enc_vec, t_dens, t_inv_dens, t_sa_sample_strat, t_isa, t_alphabet_str
     }
     {
         auto event = memory_monitor::event("encode PSI");
-        int_vector_buffer<> psi_buf(cache_file_name(conf::KEY_PSI, config));
+        int_vector_mapper<> psi_buf(cache_file_name(conf::KEY_PSI, config));
         t_enc_vec tmp_psi(psi_buf);
         m_psi.swap(tmp_psi);
     }
