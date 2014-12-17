@@ -165,6 +165,7 @@ int main(int argc, char** argv)
     if (num_bytes == 1) {
         CSA_TYPE csa;
         sdsl::load_from_file(csa,index_file);
+        std::cout << "size = " << csa.size() << std::endl;
         measure_sa(csa,input_file,res_stream);
         measure_isa(csa,input_file,res_stream);
         measure_bwt(csa,input_file,res_stream);
@@ -172,6 +173,7 @@ int main(int argc, char** argv)
     } else {
         CSA_TYPE_INT csa;
         sdsl::load_from_file(csa,index_file);
+        std::cout << "size = " << csa.size() << std::endl;
         measure_sa(csa,input_file,res_stream);
         measure_isa(csa,input_file,res_stream);
         measure_bwt(csa,input_file,res_stream);

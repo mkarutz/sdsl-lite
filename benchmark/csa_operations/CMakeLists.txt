@@ -12,7 +12,7 @@ endif(GO_EXEC)
 
 ## Project information ##
 project(index_operations CXX C)
-set(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_BUILD_TYPE "Debug")
 
 ## Download test files if they don't exist
 execute_process(COMMAND go run tools/glob_test_files.go OUTPUT_VARIABLE TEST_FILES)
@@ -46,7 +46,7 @@ link_directories("../../build/external/FastPFor")
 execute_process(
 	COMMAND go run tools/generate_build_targets.go WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
-set(BUILD_BINARIES "")
+set(BINARIES "")
 include(./config/indexes/parsed_index_configs.cmake)
 set_directory_properties(PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/config/indexes/parsed_index_configs.cmake")
 

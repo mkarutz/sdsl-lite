@@ -1,0 +1,22 @@
+{
+  "name": "CSA-SADA-UEF",
+  "compiler_defines": {
+  	"SAMPLE_RATE": [
+  		4,
+  		8,
+  		16
+  	],
+  	"VECTOR_TYPE": "ef_vector<128>",
+  	"SA_SAMPLE_STRAT": "text_order_sa_sampling<sd_vector<>>",
+  	"ISA_SAMPLE_START": "text_order_isa_sampling_support<inv_perm_support<8>>",
+  	"CSA_TYPE": "csa_sada<VECTOR_TYPE,SAMPLE_RATE,SAMPLE_RATE,SA_SAMPLE_STRAT,ISA_SAMPLE_START>",
+  	"CSA_TYPE_INT": "csa_sada_int<VECTOR_TYPE,SAMPLE_RATE,SAMPLE_RATE,SA_SAMPLE_STRAT,ISA_SAMPLE_START>"
+  },
+  "libraries": [
+  	"sdsl",
+  	"divsufsort",
+  	"divsufsort64",
+  	"pthread",
+  	"FastPFor"
+  ]
+}
