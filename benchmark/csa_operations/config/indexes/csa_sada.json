@@ -4,11 +4,12 @@
   	"SAMPLE_RATE": [
   		4,
   		8,
-  		16
+  		16,
+      32
   	],
   	"VECTOR_TYPE": "enc_vector<coder::elias_delta>",
-  	"SA_SAMPLE_STRAT": "text_order_sa_sampling<sd_vector<>>",
-  	"ISA_SAMPLE_START": "text_order_isa_sampling_support<inv_perm_support<8>>",
+  	"SA_SAMPLE_STRAT": "sa_order_sa_sampling<>",
+  	"ISA_SAMPLE_START": "isa_sampling<>",
   	"CSA_TYPE": "csa_sada<VECTOR_TYPE,SAMPLE_RATE,SAMPLE_RATE,SA_SAMPLE_STRAT,ISA_SAMPLE_START>",
   	"CSA_TYPE_INT": "csa_sada_int<VECTOR_TYPE,SAMPLE_RATE,SAMPLE_RATE,SA_SAMPLE_STRAT,ISA_SAMPLE_START>"
   },
