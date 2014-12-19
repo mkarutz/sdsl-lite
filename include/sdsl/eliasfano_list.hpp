@@ -20,6 +20,7 @@ class ef_iterator : public std::iterator<std::random_access_iterator_tag,uint64_
         uint64_t m_size = 0;
         uint64_t m_universe = 0;
         uint8_t m_width_low = 0;
+        uint64_t m_width_mask = 0;
         uint64_t m_low_offset = 0;
         uint64_t m_high_offset = 0;
         const uint64_t* m_data;
@@ -41,6 +42,7 @@ class ef_iterator : public std::iterator<std::random_access_iterator_tag,uint64_
             uint8_t logu = sdsl::bits::hi(m_universe)+1;
             if (logm == logu) logm--;
             m_width_low = logu - logm;
+            m_width_mask = sdsl::bits::lo_set[m_width_low];
             m_low_offset = is.tellg();
             m_high_offset = m_low_offset + m_size*m_width_low;
             m_cur_offset = end ? m_size : 0;
@@ -61,6 +63,7 @@ class ef_iterator : public std::iterator<std::random_access_iterator_tag,uint64_
             uint8_t logu = sdsl::bits::hi(m_universe)+1;
             if (logm == logu) logm--;
             m_width_low = logu - logm;
+            m_width_mask = sdsl::bits::lo_set[m_width_low];
 
             m_data = is.data();
             is.seek(start_offset);
@@ -225,19 +228,31 @@ class ef_iterator : public std::iterator<std::random_access_iterator_tag,uint64_
             return false;
         }
     private:
+        inline uint64_t read_int_fast(const uint64_t* word, uint8_t offset) const
+        {
+            uint64_t w1 = (*word)>>offset;
+            if ((offset+m_width_low) > 64) { // if offset+len > 64
+                return w1 |  // w1 or w2 adepted:
+                       ((*(word+1) & bits::lo_set[(offset+m_width_low)&0x3F])   // set higher bits zero
+                        << (64-offset));  // move bits to the left
+            } else {
+                return w1 & m_width_mask;
+            }
+        }
+
         inline value_type low(size_type i) const
         {
             const auto off = m_low_offset + i*m_width_low;
             const auto data_ptr = m_data + (off>>6);
             const auto in_word_offset = off&0x3F;
-            return sdsl::bits::read_int(data_ptr,in_word_offset,m_width_low);
+            return read_int_fast(data_ptr,in_word_offset);
         }
         inline value_type high(size_type i) const
         {
             const auto off = m_high_offset + i;
             const auto data_ptr = m_data + (off>>6);
             const auto in_word_offset = off&0x3F;
-            return sdsl::bits::read_int(data_ptr,in_word_offset,1);
+            return sdsl::bits::read_bit(data_ptr,in_word_offset);
         }
 };
 
@@ -256,7 +271,7 @@ struct eliasfano_list {
         if (m == 0) m = std::distance(begin,end);
         if (u == 0) {
             if (!t_sorted) {
-                u = std::accumulate(begin,end, 0)+1;
+                u = std::accumulate(begin,end, 0ULL)+1;
             } else {
                 u = *(end-1)+1;
             }

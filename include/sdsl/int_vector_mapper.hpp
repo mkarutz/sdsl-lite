@@ -21,6 +21,9 @@ class int_vector_mapper
         typedef typename int_vector<t_width>::size_type size_type;
         typedef typename int_vector<t_width>::int_width_type width_type;
         typedef typename int_vector<t_width>::const_iterator const_iterator;
+        typedef typename int_vector<t_width>::iterator iterator;
+        typedef typename int_vector<t_width>::const_reference const_reference;
+        typedef typename int_vector<t_width>::reference reference;
     public:
         const size_type append_block_size = 1000000;
     private:
@@ -54,7 +57,7 @@ class int_vector_mapper
                 throw std::runtime_error(mmap_error);
             }
             auto ret = madvise(m_mapped_data, m_file_size_bytes, MADV_SEQUENTIAL);
-            if (ret == -1) {
+            if (ret == -1) { // not fatal
                 perror("Error trying to hint sequential access");
             }
         }
@@ -236,36 +239,45 @@ class int_vector_mapper
             bit_resize(size_in_bits);
         }
 
-        auto begin() -> typename int_vector<t_width>::iterator {
+        iterator begin()
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'begin'");
             return m_wrapper.begin();
         }
-        auto end() -> typename int_vector<t_width>::iterator {
+        iterator end()
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'end'");
             return m_wrapper.end();
         }
-        auto begin() const -> typename int_vector<t_width>::const_iterator {
+        const_iterator begin() const
+        {
             return m_wrapper.begin();
         }
-        auto end() const -> typename int_vector<t_width>::const_iterator {
+        const_iterator end() const
+        {
             return m_wrapper.end();
         }
-        auto cbegin() const -> typename int_vector<t_width>::const_iterator {
+        const_iterator cbegin() const
+        {
             return m_wrapper.begin();
         }
-        auto cend() const -> typename int_vector<t_width>::const_iterator {
+        const_iterator cend() const
+        {
             return m_wrapper.end();
         }
-        auto operator[](const size_type& idx) const
-        -> typename int_vector<t_width>::const_reference {
+        const_reference operator[](const size_type& idx) const
+        {
             return m_wrapper[idx];
         }
-        auto operator[](const size_type& idx)
-        -> typename int_vector<t_width>::reference {
+        reference operator[](const size_type& idx)
+        {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'operator[]'");
             return m_wrapper[idx];
         }
-        const uint64_t* data() const { return m_wrapper.data(); }
+        const uint64_t* data() const
+        {
+            return m_wrapper.data();
+        }
         uint64_t* data()
         {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapper: must be opened in in+out mode for 'data'");
@@ -329,6 +341,16 @@ class int_vector_mapper
         {
             return m_wrapper.empty();
         }
+        size_type max_size() const
+        {
+            return m_wrapper.max_size();
+        }
+        static int_vector_mapper<t_width> create(const std::string& file_name,size_type size=0)
+        {
+            int_vector<t_width> tmp_vector(size);
+            store_to_file(tmp_vector,file_name);
+            return int_vector_mapper<t_width,std::ios_base::out|std::ios_base::in>(file_name);
+        }
 };
 
 template <uint8_t t_width = 0>
@@ -368,6 +390,9 @@ class temp_file_buffer
 
 template<std::ios_base::openmode t_mode = std::ios_base::out|std::ios_base::in>
 using bit_vector_mapper = int_vector_mapper<1,t_mode>;
+
+template<uint8_t t_width = 0>
+using read_only_mapper = int_vector_mapper<t_width,std::ios_base::in>;
 
 } // end of namespace
 

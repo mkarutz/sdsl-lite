@@ -8,7 +8,6 @@
 #include "dac_vector.hpp"
 
 #include "optpfor_vector.hpp"
-#include "optpfor_vector2.hpp"
 #include "bp_vector.hpp"
 #include "ef_vector.hpp"
 

@@ -25,15 +25,13 @@ class ef_vector
         typedef int_vector<>::size_type                  size_type;
         static  const uint64_t                           block_size    = t_block_size;
         static  const uint64_t                           sample_dens   = t_block_size;
-        typedef ef_vector                                enc_vec_type;
+        typedef ef_vector                               enc_vec_type;
 
     private:
-        size_type         								 m_size = 0;
-        int_vector<>								 	 m_top;
-        bit_vector										 m_low_data;
-        bit_vector                                       m_block_sorted;
-        int_vector<>									 m_block_offsets;
-        bit_istream 							  		 m_lis;
+        size_type                                        m_size = 0;
+        bit_vector                                       m_low_data;
+        int_vector<>                                     m_block_data;
+        bit_istream                                      m_lis;
     private:
         enum class efv_blocktype
         {
@@ -51,36 +49,30 @@ class ef_vector
         }
 
         size_type encode_block(bit_ostream& os,std::vector<uint64_t>& data,size_t cur_block,
-                               const std::vector<uint64_t>& top)
+                               const std::vector<uint64_t>& top,bool last = false)
         {
             size_type offset = os.tellp();
-            if (std::is_sorted(data.begin(),data.end()) && top[cur_block] < data[0]) {
-                m_block_sorted[cur_block] = 1;
+            if (std::is_sorted(data.begin(),data.end()) && top[cur_block] < data[0] && !last) {
+
                 auto block_value_offset = top[cur_block];
                 std::for_each(data.begin(),data.end(),[&block_value_offset](uint64_t& x) { x-=block_value_offset; });
                 auto block_universe = top[cur_block+1] - block_value_offset;
                 auto block_type = determine_block_type(data.size(),block_universe);
                 if (block_type == efv_blocktype::BV) {
+                    os.put_int(1,2);
                     bitvector_list<true>::create(os,data.begin(),data.end(),block_universe);
-                    m_num_bv_blocks++;
                 } else if (block_type == efv_blocktype::EF) {
+                    os.put_int(2,2);
                     eliasfano_list<true,true>::create(os,data.begin(),data.end(),data.size(),block_universe);
-                    m_num_ef_blocks++;
                 } else {
-                    m_num_full_blocks++;
+                    os.put_int(3,2);
                 }
             } else {
-                m_num_unsorted_blocks++;
-                m_block_sorted[cur_block] = 0;
+                os.put_int(0,2);
                 eliasfano_list<false,false>::create(os,data.begin(),data.end());
             }
             return offset;
         }
-
-        size_type m_num_ef_blocks = 0;
-        size_type m_num_bv_blocks = 0;
-        size_type m_num_full_blocks = 0;
-        size_type m_num_unsorted_blocks = 0;
 
     public:
         ef_vector() : m_lis(m_low_data) {};
@@ -109,41 +101,32 @@ class ef_vector
                 bit_ostream os(m_low_data);
                 std::vector<uint64_t> tmp(block_size);
                 itr = c.begin();
-                m_block_offsets.resize(top.size());
-                m_block_sorted.resize(top.size());
+                m_block_data.resize(2*top.size());
                 size_t cur_block = 0;
                 block_items = 0;
                 while (itr != end) {
                     tmp[block_items++] = *itr++;
                     if (block_items == block_size) {
-                        m_block_offsets[cur_block] = encode_block(os,tmp,cur_block,top);
+                        m_block_data[2*cur_block] = encode_block(os,tmp,cur_block,top);
                         block_items = 0;
                         cur_block++;
                     }
                 }
                 if (block_items != 0) {
                     tmp.resize(block_items);
-                    m_block_offsets[cur_block] = encode_block(os,tmp,cur_block,top);
+                    m_block_data[2*cur_block] = encode_block(os,tmp,cur_block,top,true);
                 }
             }
             // (3) encode top
-            m_top.resize(top.size());
-            for (size_t i=0; i<top.size(); i++) m_top[i] = top[i];
+            for (size_t i=0; i<top.size(); i++) m_block_data[2*i+1] = top[i];
 
             // (4) bit compress stuff
-            util::bit_compress(m_block_offsets);
-            util::bit_compress(m_top);
-
-            // compute stats
-            size_t num_sorted = 0;
-            for (size_t i=0; i<m_block_sorted.size(); i++) {
-                if (m_block_sorted[i]==1) num_sorted++;
-            }
+            util::bit_compress(m_block_data);
         }
 
         value_type sample(const size_type i) const
         {
-            return m_top[i];
+            return m_block_data[2*i+1];
         }
 
         uint32_t get_sample_dens() const
@@ -181,39 +164,40 @@ class ef_vector
         {
             auto block_num = i/block_size;
             auto in_block_offset = i%block_size;
-            if (m_block_sorted[block_num] == 1) {
-                auto value_offset = m_top[block_num];
-                auto block_universe = m_top[block_num+1] - value_offset;
-                size_t items_in_block = (1+block_num)*block_size <= m_size ? block_size : ((1+block_num)*block_size)%block_size;
-                auto block_type = determine_block_type(items_in_block,block_universe);
-                if (block_type == efv_blocktype::BV) {
-                    auto list = bitvector_list<true>::materialize(m_lis,m_block_offsets[block_num],items_in_block,block_universe);
-                    auto itr = list.begin();
-                    itr+=in_block_offset;
-                    return value_offset + *itr;
-                } else if (block_type == efv_blocktype::EF) {
-                    auto list = eliasfano_list<true,true>::materialize(m_lis,m_block_offsets[block_num],items_in_block,block_universe);
-                    auto itr = list.begin();
-                    itr+=in_block_offset;
-                    return value_offset + *itr;
-                }
-                // uniform list
-                return value_offset + in_block_offset + 1;
-            } else { // unsorted
-                auto list = eliasfano_list<false,false>::materialize(m_lis,m_block_offsets[block_num]);
+            auto data_offset = m_block_data[2*block_num];
+            m_lis.seek(data_offset);
+            auto block_type = m_lis.peek_int(2);
+            if (block_type == 1) {
+                auto value_offset = m_block_data[2*block_num+1];
+                auto block_universe = m_block_data[2*(block_num+1)+1] - value_offset;
+                auto list = bitvector_list<true>::materialize(m_lis,data_offset+2,block_size,block_universe);
                 auto itr = list.begin();
-                return *(itr+in_block_offset);
+                itr+=in_block_offset;
+                return value_offset + *itr;
             }
+            if (block_type == 2) {
+                auto value_offset = m_block_data[2*block_num+1];
+                auto block_universe = m_block_data[2*(block_num+1)+1] - value_offset;
+                auto list = eliasfano_list<true,true>::materialize(m_lis,data_offset+2,block_size,block_universe);
+                auto itr = list.begin();
+                itr+=in_block_offset;
+                return value_offset + *itr;
+            }
+            if (block_type == 3) {
+                auto value_offset = m_block_data[2*block_num+1];
+                return value_offset + in_block_offset + 1;
+            }
+            auto list = eliasfano_list<false,false>::materialize(m_lis,data_offset+2);
+            auto itr = list.begin();
+            return *(itr+in_block_offset);
         }
         size_type serialize(std::ostream& out, structure_tree_node* v=nullptr, std::string name="") const
         {
             structure_tree_node* child = structure_tree::add_child(v, name, util::class_name(*this));
             size_type written_bytes = 0;
             written_bytes += write_member(m_size, out, child, "size");
-            written_bytes += m_top.serialize(out, child, "top");
             written_bytes += m_low_data.serialize(out, child, "low");
-            written_bytes += m_block_offsets.serialize(out, child, "pointers");
-            written_bytes += m_block_sorted.serialize(out, child, "block sorted");
+            written_bytes += m_block_data.serialize(out, child, "block data");
             structure_tree::add_size(child, written_bytes);
             return written_bytes;
         }
@@ -221,18 +205,14 @@ class ef_vector
         void load(std::istream& in)
         {
             read_member(m_size, in);
-            m_top.load(in);
             m_low_data.load(in);
-            m_block_offsets.load(in);
-            m_block_sorted.load(in);
+            m_block_data.load(in);
         }
 
         void swap(ef_vector& v)
         {
             if (this != &v) {
-                std::swap(m_top,v.m_top);
-                std::swap(m_block_offsets,v.m_block_offsets);
-                std::swap(m_block_sorted,v.m_block_sorted);
+                std::swap(m_block_data,v.m_block_data);
                 std::swap(m_size, v.m_size);
                 std::swap(m_low_data,v.m_low_data);
             }

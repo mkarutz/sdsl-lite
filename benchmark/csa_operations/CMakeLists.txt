@@ -12,7 +12,7 @@ endif(GO_EXEC)
 
 ## Project information ##
 project(index_operations CXX C)
-set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_BUILD_TYPE "Release")
 
 ## Download test files if they don't exist
 execute_process(COMMAND go run tools/glob_test_files.go OUTPUT_VARIABLE TEST_FILES)

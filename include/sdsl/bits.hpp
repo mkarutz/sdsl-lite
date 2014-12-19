@@ -198,6 +198,7 @@ struct bits {
 
     //! Reads a value from a bit position in an array.
     static uint64_t read_int(const uint64_t* word, uint8_t offset=0, const uint8_t len=64);
+    static uint64_t read_bit(const uint64_t* word, uint8_t offset=0);
 
     //! Reads a value from a bit position in an array and moved the bit-pointer.
     static uint64_t read_int_and_move(const uint64_t*& word, uint8_t& offset, const uint8_t len=64);
@@ -497,6 +498,11 @@ inline uint64_t bits::read_int(const uint64_t* word, uint8_t offset, const uint8
     } else {
         return w1 & bits::lo_set[len];
     }
+}
+
+inline uint64_t bits::read_bit(const uint64_t* word, uint8_t offset)
+{
+    return (*word >> offset) & 1ULL;
 }
 
 inline uint64_t bits::read_int_and_move(const uint64_t*& word, uint8_t& offset, const uint8_t len)

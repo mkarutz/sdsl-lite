@@ -38,7 +38,7 @@ class bv_iterator : public std::iterator<std::random_access_iterator_tag,uint64_
             m_cur_offset = end ? m_size : 0;
             const auto data_ptr = m_data + (m_bit_offset>>6);
             const auto in_word_offset = m_bit_offset&0x3F;
-            if (m_cur_offset == 0 && sdsl::bits::read_int(data_ptr,in_word_offset,1) == 0) {
+            if (m_cur_offset == 0 && sdsl::bits::read_bit(data_ptr,in_word_offset) == 0) {
                 m_bit_offset = sdsl::bits::next(m_data,m_bit_offset); // select first one
             }
         }
@@ -52,7 +52,7 @@ class bv_iterator : public std::iterator<std::random_access_iterator_tag,uint64_
             m_bit_start_offset = m_bit_offset;
             const auto data_ptr = m_data + (m_bit_offset>>6);
             const auto in_word_offset = m_bit_offset&0x3F;
-            if (m_cur_offset == 0 && sdsl::bits::read_int(data_ptr,in_word_offset,1) == 0) {
+            if (m_cur_offset == 0 && sdsl::bits::read_bit(data_ptr,in_word_offset) == 0) {
                 m_bit_offset = sdsl::bits::next(m_data,m_bit_offset); // select first one
             }
         }
@@ -128,7 +128,7 @@ class bv_iterator : public std::iterator<std::random_access_iterator_tag,uint64_
             m_bit_offset = m_bit_start_offset + pos;
             const auto data_ptr = m_data + (m_bit_offset>>6);
             const auto in_word_offset = m_bit_offset&0x3F;
-            if (sdsl::bits::read_int(data_ptr,in_word_offset,1) == 0) {
+            if (sdsl::bits::read_bit(data_ptr,in_word_offset) == 0) {
                 m_bit_offset = sdsl::bits::next(m_data,m_bit_offset); // select next one
                 if (m_bit_offset - m_bit_start_offset > m_universe) {
                     m_cur_offset = m_size;
