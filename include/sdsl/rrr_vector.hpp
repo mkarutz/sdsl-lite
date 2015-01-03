@@ -423,7 +423,7 @@ class rank_support_rrr
            \par Time complexity
                 \f$ \Order{ sample\_rate of the rrr\_vector} \f$
         */
-        const size_type rank(size_type i)const {
+        size_type rank(size_type i)const {
             assert(m_v != nullptr);
             assert(i <= m_v->size());
             size_type bt_idx = i/t_bs;
@@ -461,12 +461,12 @@ class rank_support_rrr
         }
 
         //! Short hand for rank(i)
-        const size_type operator()(size_type i)const {
+        size_type operator()(size_type i)const {
             return rank(i);
         }
 
         //! Returns the size of the original vector
-        const size_type size()const {
+        size_type size()const {
             return m_v->size();
         }
 
@@ -610,11 +610,11 @@ class select_support_rrr
             return  t_b ? select1(i) : select0(i);
         }
 
-        const size_type operator()(size_type i)const {
+        size_type operator()(size_type i)const {
             return select(i);
         }
 
-        const size_type size()const {
+        size_type size()const {
             return m_v->size();
         }
 

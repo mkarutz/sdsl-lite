@@ -644,7 +644,7 @@ class rank_support_hyb
         }
 
         //! Answers rank queries
-        const size_type rank(size_type i) const
+        size_type rank(size_type i) const
         {
             assert(m_v != nullptr);
             assert(i <= m_v->size());
@@ -775,13 +775,13 @@ class rank_support_hyb
         }
 
         //! Shorthand for rank(i)
-        const size_type operator()(size_type i) const
+        size_type operator()(size_type i) const
         {
             return rank(i);
         }
 
         //! Return the size of the original vector
-        const size_type size() const
+        size_type size() const
         {
             return m_v->size();
         }
@@ -850,13 +850,13 @@ class select_support_hyb
         }
 
         //! Shorthand for select(i)
-        const size_type operator()(size_type i) const
+        size_type operator()(size_type i) const
         {
             return select(i);
         }
 
         //! Return the size of the original vector
-        const size_type size() const
+        size_type size() const
         {
             return m_v->size();
         }

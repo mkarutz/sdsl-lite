@@ -8,6 +8,7 @@
 #include <queue>
 #include <vector>
 #include <utility>
+#include <array>
 
 namespace sdsl
 {
@@ -76,7 +77,7 @@ struct _node {
     uint64_t bv_pos      = 0;             // pointer into the bit_vector, which represents the wavelet tree
     uint64_t bv_pos_rank = 0;             // pre-calculated rank for the prefix up to but not including bv_pos
     node_type parent      = t_tree_strat_fat::undef; // pointer to the parent
-    node_type child[2]    = {t_tree_strat_fat::undef,t_tree_strat_fat::undef}; // pointer to the children
+    std::array<node_type,2> child; // pointer to the children
 
     _node(uint64_t bv_pos=0, uint64_t bv_pos_rank=0, node_type parent=t_tree_strat_fat::undef,
           node_type child_left=t_tree_strat_fat::undef, node_type child_right=t_tree_strat_fat::undef):
@@ -111,7 +112,7 @@ struct _node {
         written_bytes += write_member(bv_pos, out);
         written_bytes += write_member(bv_pos_rank, out);
         written_bytes += write_member(parent, out);
-        out.write((char*)child, 2*sizeof(child[0]));
+        out.write((char*)child.data(), 2*sizeof(node_type));
         written_bytes += 2*sizeof(child[0]);
         structure_tree::add_size(st_child, written_bytes);
         return written_bytes;

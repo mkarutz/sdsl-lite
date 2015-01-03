@@ -1,3 +1,8 @@
+IF(POLICY CMP0048)
+	CMAKE_POLICY(SET CMP0048 OLD)
+ENDIF(POLICY CMP0048)
+project(divsufsort)
+
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../include"
                     "${CMAKE_CURRENT_BINARY_DIR}/../include")
 

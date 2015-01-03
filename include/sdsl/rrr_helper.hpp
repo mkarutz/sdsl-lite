@@ -118,7 +118,7 @@ struct binomial_coefficients_trait<7> {
     }
 
     static inline uint16_t popcount(number_type x) {
-        return bits::cnt(x >> 64) + bits::cnt(x);
+        return (uint16_t) bits::cnt(x >> 64) + (uint16_t) bits::cnt(x);
     }
 };
 

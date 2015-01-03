@@ -639,7 +639,7 @@ void construct_lcp_bwt_based(cache_config& config)
 
     std::queue<size_type> q;                      // Queue for storing the intervals
     std::vector<bit_vector> dict(2);              // bit_vector for storing the intervals
-    size_type source = 0, target = 1;             // Defines which bit_vector is source and which is target
+    uint32_t source = 0ULL, target = 1ULL;             // Defines which bit_vector is source and which is target
     bool queue_used = true;
     size_type use_queue_and_wt = n/2048;          // if intervals < use_queue_and_wt, then use queue and wavelet tree
     // else use dictionary and wavelet tree
@@ -869,7 +869,7 @@ void construct_lcp_bwt_based2(cache_config& config)
 
         std::queue<size_type> q;                       // Queue for storing the intervals
         std::vector<bit_vector> dict(2);               // bit_vector for storing the intervals
-        size_type source = 0, target = 1;              // Defines which bit_vector is source and which is target
+        uint32_t source = 0, target = 1;              // Defines which bit_vector is source and which is target
         bool queue_used = true;                        // Defines whether a queue (true) or the bit_vectors (false) was used to store intervals
         size_type use_queue_and_wt = n/2048;           // if intervals < use_queue_and_wt, then use queue and wavelet tree
         // else use dictionary and wavelet tree
@@ -1016,17 +1016,17 @@ void construct_lcp_bwt_based2(cache_config& config)
                             }
                             index_done[b_new] = true;
                             // Save interval
-                            dict[target][(a_new<<1)+1] = 1;
-                            dict[target][(b_new<<1)  ] = 1;
+                            dict[target][(a_new<<1)+1] = 1ULL;
+                            dict[target][(b_new<<1)  ] = 1ULL;
                             ++intervals;
                         }
                     }
                     // get next interval
-                    a2 = util::next_bit(dict[source], b2+1);
-                    b2 = util::next_bit(dict[source], a2+1);
+                    a2 = util::next_bit(dict[source], b2+1ULL);
+                    b2 = util::next_bit(dict[source], a2+1ULL);
                 }
                 std::swap(source, target);
-                util::set_to_value(dict[target], 0);
+                util::set_to_value(dict[target], 0ULL);
             }
             ++lcp_value;
             new_lcp_value = true;

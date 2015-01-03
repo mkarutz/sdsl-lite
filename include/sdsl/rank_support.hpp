@@ -116,11 +116,11 @@ struct rank_support_trait<0,1> {
     }
 
     static uint32_t word_rank(const uint64_t* data, size_type idx) {
-        return	bits::cnt((~*(data+(idx>>6))) & bits::lo_set[idx&0x3F]);
+        return (uint32_t) bits::cnt((~*(data+(idx>>6))) & bits::lo_set[idx&0x3F]);
     }
 
     static uint32_t full_word_rank(const uint64_t* data, size_type idx) {
-        return	bits::cnt((~*(data+(idx>>6))));
+        return (uint32_t) bits::cnt((~*(data+(idx>>6))));
     }
 
     static uint64_t init_carry() {
@@ -137,11 +137,11 @@ struct rank_support_trait<1,1> {
     }
 
     static uint32_t word_rank(const uint64_t* data, size_type idx) {
-        return	bits::cnt(*(data+(idx>>6)) & bits::lo_set[idx&0x3F]);
+        return	(uint32_t) bits::cnt(*(data+(idx>>6)) & bits::lo_set[idx&0x3F]);
     }
 
     static uint32_t full_word_rank(const uint64_t* data, size_type idx) {
-        return	bits::cnt(*(data+(idx>>6)));
+        return	(uint32_t) bits::cnt(*(data+(idx>>6)));
     }
 
     static uint64_t init_carry() {
@@ -160,13 +160,13 @@ struct rank_support_trait<10,2> {
     static uint32_t word_rank(const uint64_t* data, size_type idx) {
         data = data+(idx>>6);
         uint64_t carry = (idx>63) ? *(data-1)>>63 : 0;
-        return	bits::cnt(bits::map10(*data, carry) & bits::lo_set[idx&0x3F]);
+        return	(uint32_t) bits::cnt(bits::map10(*data, carry) & bits::lo_set[idx&0x3F]);
     }
 
     static uint32_t full_word_rank(const uint64_t* data, size_type idx) {
         data = data+(idx>>6);
         uint64_t carry = (idx>63) ? *(data-1)>>63 : 0;
-        return	bits::cnt(bits::map10(*data, carry));
+        return	(uint32_t) bits::cnt(bits::map10(*data, carry));
     }
 
     static uint64_t init_carry() {
@@ -185,13 +185,13 @@ struct rank_support_trait<01,2> {
     static uint32_t word_rank(const uint64_t* data, size_type idx) {
         data = data+(idx>>6);
         uint64_t carry = (idx>63) ? *(data-1)>>63 : 0;
-        return	bits::cnt(bits::map01(*data, carry) & bits::lo_set[idx&0x3F]);
+        return	(uint32_t) bits::cnt(bits::map01(*data, carry) & bits::lo_set[idx&0x3F]);
     }
 
     static uint32_t full_word_rank(const uint64_t* data, size_type idx) {
         data = data+(idx>>6);
         uint64_t carry = (idx>63) ? *(data-1)>>63 : 0;
-        return	bits::cnt(bits::map01(*data, carry));
+        return	(uint32_t) bits::cnt(bits::map01(*data, carry));
     }
 
     static uint64_t init_carry() {

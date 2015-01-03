@@ -129,14 +129,14 @@ struct excess {
                     excess += 1-2*((w&(1<<p))==0);
                     if (excess <= min[w]) {
                         min[w] = excess;
-                        min_pos_max[w] = p;
+                        min_pos_max[w] = (uint8_t)p;
                     }
                     if (excess < 0 and packed_mins[-excess-1] == 9) {
-                        packed_mins[-excess-1] = p;
+                        packed_mins[-excess-1] = (uint8_t)p;
                     }
                     if (w&(1<<p) and excess+8 <= min_excess_of_open) {
                         min_excess_of_open     = excess+8;
-                        min_excess_of_open_pos = p;
+                        min_excess_of_open_pos = (uint8_t)p;
                     }
                     rev_excess += 1-2*((w&(1<<(7-p)))>0);
                     if (rev_excess < 0 and packed_maxs[-rev_excess-1] == 9) {
@@ -145,9 +145,9 @@ struct excess {
                 }
                 word_sum[w] = excess;
                 packed_mins.width(32);
-                min_match_pos_packed[w] = packed_mins[0];
+                min_match_pos_packed[w] = (uint32_t) packed_mins[0];
                 packed_maxs.width(32);
-                max_match_pos_packed[w] = packed_maxs[0];
+                max_match_pos_packed[w] = (uint32_t) packed_maxs[0];
                 min_open_excess_info[w] = (min_excess_of_open) |
                                           (min_excess_of_open_pos << 8) |
                                           (ones << 12);

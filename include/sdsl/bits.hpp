@@ -28,6 +28,10 @@
 #include <xmmintrin.h>
 #endif
 
+#ifdef WIN32
+#include "iso646.h"
+#endif
+
 //! Namespace for the succinct data structure library.
 namespace sdsl
 {
@@ -296,7 +300,7 @@ inline uint32_t bits::cnt11(uint64_t x)
 
 inline uint32_t bits::cnt10(uint64_t x, uint64_t& c)
 {
-    uint32_t res = cnt((x ^((x<<1) | c)) & (~x));
+    uint32_t res = (uint32_t) cnt((x ^((x<<1) | c)) & (~x));
     c = (x >> 63);
     return res;
 }
@@ -308,7 +312,7 @@ inline uint64_t bits::map10(uint64_t x, uint64_t c)
 
 inline uint32_t bits::cnt01(uint64_t x, uint64_t& c)
 {
-    uint32_t res = cnt((x ^((x<<1) | c)) & x);
+    uint32_t res = (uint32_t) cnt((x ^((x<<1) | c)) & x);
     c = (x >> 63);
     return res;
 }

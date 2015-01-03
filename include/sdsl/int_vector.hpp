@@ -72,7 +72,7 @@ static void calculate_sa(const unsigned char* c,
 
 
 //! bit_vector is a specialization of the int_vector.
-typedef int_vector<1> bit_vector;
+using bit_vector = int_vector<1>;
 
 template<class t_int_vector>
 class int_vector_reference;
@@ -488,24 +488,24 @@ class int_vector
         //! Iterator that points to the first element of the int_vector.
         /*!  Time complexity guaranty is O(1).
          */
-        const iterator begin() {
+        iterator begin() {
             return int_vector_trait<t_width>::begin(this, m_data);
         }
 
         //! Iterator that points to the element after the last element of int_vector.
         /*! Time complexity guaranty is O(1).
          */
-        const iterator end() {
+        iterator end() {
             return int_vector_trait<t_width>::end(this, m_data, (m_size/m_width));
         }
 
         //! Const iterator that points to the first element of the int_vector.
-        const const_iterator begin() const {
+        const_iterator begin() const {
             return int_vector_trait<t_width>::begin(this, m_data);
         }
 
         //! Const iterator that points to the element after the last element of int_vector.
-        const const_iterator end() const {
+        const_iterator end() const {
             return int_vector_trait<t_width>::end(this, m_data, (m_size/m_width));
         }
 
@@ -1144,7 +1144,8 @@ inline int_vector<t_width>::int_vector(const int_vector& v):
 {
     bit_resize(v.bit_size());
     if (v.capacity() > 0) {
-        if (memcpy(m_data, v.data() ,v.capacity()/8)==nullptr) {
+		size_t s = (size_t)v.capacity() / 8ULL;
+        if (memcpy(m_data, v.data() , s)==nullptr) {
             throw std::bad_alloc(); // LCOV_EXCL_LINE
         }
     }
@@ -1157,7 +1158,8 @@ int_vector<t_width>& int_vector<t_width>::operator=(const int_vector& v)
     if (this != &v) {// if v is not the same object
         bit_resize(v.bit_size());
         if (v.bit_size()>0) {
-            if (memcpy(m_data, v.data() ,v.capacity()/8)==nullptr) {
+			size_t s = (size_t)v.capacity() / 8ULL;
+            if (memcpy(m_data, v.data() ,s)==nullptr) {
                 throw std::bad_alloc(); // LCOV_EXCL_LINE
             }
         }
@@ -1275,7 +1277,7 @@ int_vector<t_width>::operator[](const size_type& idx)const -> const_reference
 
 template<>
 inline auto
-int_vector<0>::operator[](const size_type& idx)const -> const_reference
+int_vector<0>::operator[](const size_type& idx) const -> const_reference
 {
     assert(idx < this->size());
     return get_int(idx * m_width, m_width);
@@ -1418,7 +1420,7 @@ typename int_vector<t_width>::size_type int_vector<t_width>::serialize(std::ostr
         written_bytes += int_vector<t_width>::write_header(m_size, m_width, out);
     }
     written_bytes += write_data(out);
-    structure_tree::add_size(child, written_bytes);
+    structure_tree::add_size(child, (size_t) written_bytes);
     return written_bytes;
 }
 

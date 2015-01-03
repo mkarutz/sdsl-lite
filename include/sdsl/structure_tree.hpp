@@ -52,7 +52,7 @@ class structure_tree
             if (v) return v->add_child(name,type);
             return nullptr;
         };
-        static void add_size(structure_tree_node* v, uint64_t value) {
+        static void add_size(structure_tree_node* v, size_t value) {
             if (v) v->add_size(value);
         };
 };
