@@ -585,14 +585,13 @@ struct void_ { typedef void type; };
 
 template<typename t_wt, typename T = void>
 struct has_node_type {
-    static std::false_type value;
+	static std::false_type value;
 };
 
 template<typename t_wt>
 struct has_node_type<t_wt, typename void_<typename t_wt::node_type>::type> {
-    static std::true_type value;
+	static std::true_type value;
 };
-
 
 
 } // end namespace
