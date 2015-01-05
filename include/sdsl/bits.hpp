@@ -28,7 +28,7 @@
 #include <xmmintrin.h>
 #endif
 
-#ifdef WIN32
+#ifdef MSVC_COMPILER
 #include "iso646.h"
 #endif
 

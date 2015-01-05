@@ -25,7 +25,7 @@
 
 #include <type_traits>
 #include <typeinfo>
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 #include <cxxabi.h>
 #endif
 
@@ -40,7 +40,7 @@ uint64_t _id_helper::id = 0;
 std::string basename(std::string file)
 {
     file = disk_file_name(file); // remove RAM-prefix
-#ifdef WIN32
+#ifdef MSVC_COMPILER
 	char* c = _strdup((const char*)file.c_str());
 	char file_name[_MAX_FNAME] = { 0 };
 	::_splitpath_s(c, NULL, 0, NULL, NULL, file_name, _MAX_FNAME, NULL, 0);
@@ -57,7 +57,7 @@ std::string dirname(std::string file)
 {
     bool ram_file = is_ram_file(file);
     file = disk_file_name(file); // remove RAM-prefix
-#ifdef WIN32
+#ifdef MSVC_COMPILER
 	char* c = _strdup((const char*)file.c_str());
 	char dir_name[_MAX_DIR] = { 0 };
 	::_splitpath_s(c, NULL,0, dir_name, _MAX_DIR, NULL,0, NULL,0);
@@ -79,7 +79,7 @@ std::string dirname(std::string file)
 
 uint64_t pid()
 {
-#ifdef WIN32
+#ifdef MSVC_COMPILER
 	return _getpid();
 #else
     return getpid();

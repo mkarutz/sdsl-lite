@@ -193,7 +193,7 @@ namespace sdsl
 #pragma pack(pop)
 
 
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 #include <sys/mman.h>
 
 	class hugepage_allocator
@@ -271,7 +271,7 @@ namespace sdsl
 		}
 	public:
 		static uint64_t* alloc_mem(size_t size_in_bytes) {
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 			auto& m = the_manager();
 			if (m.hugepages) {
 				return (uint64_t*)hugepage_allocator::the_allocator().mm_alloc(size_in_bytes);
@@ -280,7 +280,7 @@ namespace sdsl
 			return (uint64_t*)calloc(size_in_bytes, 1);
 		}
 		static void free_mem(uint64_t* ptr) {
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 			auto& m = the_manager();
 			if (m.hugepages and hugepage_allocator::the_allocator().in_address_space(ptr)) {
 				hugepage_allocator::the_allocator().mm_free(ptr);
@@ -290,7 +290,7 @@ namespace sdsl
 			std::free(ptr);
 		}
 		static uint64_t* realloc_mem(uint64_t* ptr, size_t size) {
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 			auto& m = the_manager();
 			if (m.hugepages and hugepage_allocator::the_allocator().in_address_space(ptr)) {
 				return (uint64_t*)hugepage_allocator::the_allocator().mm_realloc(ptr, size);
@@ -300,12 +300,12 @@ namespace sdsl
 		}
 	public:
 		static void use_hugepages(size_t bytes = 0) {
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 			auto& m = the_manager();
 			hugepage_allocator::the_allocator().init(bytes);
 			m.hugepages = true;
 #else
-			throw std::runtime_error("hugepages not support on WIN32");
+			throw std::runtime_error("hugepages not support on MSVC_COMPILER");
 #endif
 		}
 		template<class t_vec>

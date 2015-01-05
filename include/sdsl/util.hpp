@@ -48,7 +48,7 @@
 #define SDSL_STR(x) #x
 #define SDSL_XSTR(s) SDSL_STR(s)
 
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 #define SDSL_UNUSED __attribute__ ((unused))
 #include <sys/time.h>  // for struct timeval
 #include <sys/resource.h> // for struct rusage

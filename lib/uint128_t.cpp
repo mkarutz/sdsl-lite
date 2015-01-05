@@ -4,7 +4,7 @@
 namespace sdsl
 {
 
-#ifndef WIN32
+#ifndef MSVC_COMPILER
 std::ostream& operator<<(std::ostream& os, const uint128_t& x)
 {
     uint64_t X[2] = {(uint64_t)(x >> 64), (uint64_t)x};

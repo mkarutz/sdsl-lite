@@ -1,7 +1,7 @@
 #include "sdsl/ram_filebuf.hpp"
 #include <iostream>
 #include <limits>
-#ifdef WIN32
+#ifdef MSVC_COMPILER
 #include <iso646.h>
 #endif
 
