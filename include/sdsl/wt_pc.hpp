@@ -371,6 +371,37 @@ class wt_pc
             return result;
         };
 
+        std::pair<size_type,size_type> double_rank(size_type i,size_type j, value_type c) const {
+            assert(i <= size());
+            assert(j <= size());
+            if (!m_tree.is_valid(m_tree.c_to_leaf(c))) {
+                return {0,0};  // if `c` was not in the text
+            }
+            if (m_sigma == 1) {
+                return {i,j}; // if m_sigma == 1 answer is trivial
+            }
+            uint64_t p = m_tree.bit_path(c);
+            uint32_t path_len = (p>>56);
+            size_type result_i = i;
+            size_type result_j = j;
+            node_type v = m_tree.root();
+            for (uint32_t l=0; l<path_len and (result_i or result_j); ++l, p >>= 1) {
+                if (p&1) {
+                    result_i  = (m_bv_rank(m_tree.bv_pos(v)+result_i)
+                               -  m_tree.bv_pos_rank(v));
+                    result_j  = (m_bv_rank(m_tree.bv_pos(v)+result_j)
+                               -  m_tree.bv_pos_rank(v));
+                } else {
+                    result_i -= (m_bv_rank(m_tree.bv_pos(v)+result_i)
+                               -  m_tree.bv_pos_rank(v));
+                    result_j -= (m_bv_rank(m_tree.bv_pos(v)+result_j)
+                               -  m_tree.bv_pos_rank(v));
+                }
+                v = m_tree.child(v, p&1); // goto child
+            }
+            return {result_i,result_j};
+        };
+
         //! Calculates how many times symbol wt[i] occurs in the prefix [0..i-1].
         /*!
          * \param i The index of the symbol.

@@ -62,8 +62,11 @@ typename t_csa::size_type backward_search(
 {
     assert(l <= r); assert(r < csa.size());
     typename t_csa::size_type c_begin = csa.C[csa.char2comp[c]];
-    l_res = c_begin + csa.bwt.rank(l, c); // count c in bwt[0..l-1]
-    r_res = c_begin + csa.bwt.rank(r+1, c) - 1; // count c in bwt[0..r]
+    std::pair<typename t_csa::size_type,typename t_csa::size_type> res = csa.bwt.double_rank(l,r+1,c);
+    l_res = c_begin + res.first;
+    r_res = c_begin + res.second -1;
+    // l_res = c_begin + csa.bwt.rank(l, c); // count c in bwt[0..l-1]
+    // r_res = c_begin + csa.bwt.rank(r+1, c) - 1; // count c in bwt[0..r]
     assert(r_res+1-l_res >= 0);
     return r_res+1-l_res;
 }

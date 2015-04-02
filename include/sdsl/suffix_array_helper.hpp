@@ -446,6 +446,11 @@ class bwt_of_csa_wt
             return m_csa.rank_bwt(i, c);
         }
 
+        std::pair<size_type,size_type> double_rank(size_type i,size_type j, const char_type c)const
+        {
+            return m_csa.rank_bwt(i,j, c);
+        }
+
         //! Calculates the position of the i-th c.
         /*!
          *  \param i The i-th occurrence. \f$i\in [1..rank(size(),c)]\f$.
