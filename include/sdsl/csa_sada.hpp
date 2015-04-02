@@ -59,8 +59,6 @@ template<class t_enc_vec         = enc_vector<>,          // Vector type used to
          >
 class csa_sada
 {
-        static_assert(is_enc_vec<t_enc_vec>::value,
-                      "First template argument has to be of type env_vector.");
         static_assert(t_dens > 0,
                       "Second template argument has to be greater then 0.");
         static_assert(t_inv_dens > 0,
