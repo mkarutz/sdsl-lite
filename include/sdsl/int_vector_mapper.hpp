@@ -192,6 +192,7 @@ class int_vector_mapper
             size_type new_size_in_bytes = ((size_in_bits + 63) >> 6) << 3;
             m_file_size_bytes = new_size_in_bytes + m_data_offset;
             m_wrapper.width(int_width);
+            if(m_wrapper.m_data) memory_manager::free_mem(m_wrapper.m_data); // clear default int_vector alloc
             mmap_file();
             m_wrapper.m_size = size_in_bits;
             m_wrapper.m_data = (uint64_t*)(m_mapped_data + m_data_offset);
