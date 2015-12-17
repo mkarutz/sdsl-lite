@@ -246,6 +246,10 @@ class int_vector_mapped_buffer
             return m_buffer.size();
         }
 
+        bool empty() const {
+            return m_buffer.size() == 0;
+        }
+
         void bit_resize(const size_type bit_size)
         {
             static_assert(t_mode & std::ios_base::out,"int_vector_mapped_buffer: must be opened in in+out mode for 'bit_resize'");
