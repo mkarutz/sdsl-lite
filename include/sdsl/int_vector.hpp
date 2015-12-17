@@ -89,6 +89,9 @@ class int_vector_const_iterator;
 template<uint8_t t_width,std::ios_base::openmode t_mode>
 class int_vector_mapper;
 
+template<uint8_t t_width,std::ios_base::openmode t_mode,uint64_t t_buffer_elems>
+class int_vector_mapped_buffer;
+
 template<uint8_t b, uint8_t t_patter_len>  // forward declaration
 class rank_support_v;
 
@@ -312,6 +315,7 @@ class int_vector
         friend class  int_vector_iterator<int_vector>;
         friend class  int_vector_const_iterator<int_vector>;
         template<uint8_t,std::ios_base::openmode> friend class int_vector_mapper;
+        template<uint8_t,std::ios_base::openmode,uint64_t> friend class int_vector_mapped_buffer;
         friend class  coder::elias_delta;
         friend class  coder::elias_gamma;
         friend class  coder::fibonacci;
