@@ -89,7 +89,7 @@ class int_vector_mapped_buffer
     		m_mapped_size_bytes = (m_buffer_size*width())/8 + m_mapped_byte_offset + 1;
     		/* end of file? */
     		if(m_mapped_start_byte_pos + m_mapped_size_bytes > m_file_size_bytes) {
-    			m_mapped_size_bytes = m_file_size_bytes - m_mapped_start_byte_pos;
+    			m_mapped_size_bytes = m_file_size_bytes - m_mapped_start_byte_pos_aligned;
     		}
 
             if (!(t_mode&std::ios_base::out)) {  // read only
