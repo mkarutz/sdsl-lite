@@ -365,6 +365,34 @@ class wm_int
             return i;
         };
 
+        std::pair<size_type,size_type> 
+        double_rank(size_type i,size_type j, value_type c) const {
+            assert(i <= size());
+            assert(j <= size());
+            if (((1ULL)<<(m_max_level))<=c) { // c is greater than any symbol in wt
+                return 0;
+            }
+            size_type b = 0; // start position of the interval
+            uint64_t mask = (1ULL) << (m_max_level-1);
+            for (uint32_t k=0; k < m_max_level and i and j; ++k) {
+                size_type rank_b = m_tree_rank(b);
+                size_type ones_i   = m_tree_rank(b + i) - rank_b; // ones in [b..i)
+                size_type ones_j   = m_tree_rank(b + j) - rank_b; // ones in [b..j)
+                size_type ones_p = rank_b - m_rank_level[k];    // ones in [level_b..b)
+                if (c & mask) { // search for a one at this level
+                    i = ones_i;
+                    j = ones_j;
+                    b = (k+1)*m_size + m_zero_cnt[k] + ones_p;
+                } else { // search for a zero at this level
+                    i = i-ones_i;
+                    j = j-ones_j;
+                    b = (k+1)*m_size + (b - k*m_size - ones_p);
+                }
+                mask >>= 1;
+            }
+            return {i,j};
+        }
+
         //! Calculates how many occurrences of symbol wt[i] are in the prefix [0..i-1] of the original sequence.
         /*!
          *  \param i The index of the symbol.

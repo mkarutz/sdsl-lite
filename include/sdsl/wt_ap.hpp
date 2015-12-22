@@ -329,6 +329,25 @@ class wt_ap
                    : m_offset[cl-m_singleton_class_cnt].rank(count, offset);
         };
 
+        std::pair<size_type,size_type> 
+        double_rank(size_type i,size_type j, value_type c) const {
+            assert(i <= size());
+            assert(j <= size());
+            auto success_class_offset = try_get_char_class_offset(c);
+            if (!std::get<0>(success_class_offset)) {
+                return {0,0};
+            }
+            auto cl = std::get<1>(success_class_offset);
+            auto offset = std::get<2>(success_class_offset);
+            size_type count_i = m_class.rank(i, cl);
+            size_type count_j = m_class.rank(j, cl);
+            return cl < m_singleton_class_cnt
+                   ? std::make_pair(count_i,count_j)
+                   : std::make_pair( m_offset[cl-m_singleton_class_cnt].rank(count_i, offset),
+                       m_offset[cl-m_singleton_class_cnt].rank(count_j, offset)
+                     );
+        }
+
         //! Calculates how many occurrences of symbol wt[i] are in the prefix [0..i-1] of the original sequence.
         /*!
          *  \param i The index of the symbol.

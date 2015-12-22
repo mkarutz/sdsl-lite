@@ -182,8 +182,11 @@ typename t_csa::size_type backward_search(
             l_res = c_begin;
             r_res = csa.C[cc+1] - 1;
         } else {
-            l_res = c_begin + csa.bwt.rank(l, c); // count c in bwt[0..l-1]
-            r_res = c_begin + csa.bwt.rank(r+1, c) - 1; // count c in bwt[0..r]
+            auto res = csa.bwt.double_rank(l,r+1,c);
+            l_res = c_begin + res.first;
+            r_res = c_begin + res.second - 1;
+            // l_res = c_begin + csa.bwt.rank(l, c); // count c in bwt[0..l-1]
+            // r_res = c_begin + csa.bwt.rank(r+1, c) - 1; // count c in bwt[0..r]
         }
     }
     assert(r_res+1-l_res >= 0);

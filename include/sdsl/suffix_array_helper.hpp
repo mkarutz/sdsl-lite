@@ -275,6 +275,12 @@ class bwt_of_csa_psi
             return m_csa.rank_bwt(i,c);
         }
 
+        std::pair<size_type,size_type> 
+        double_rank(size_type i,size_type j, value_type c) const 
+        {
+            return std::make_pair( m_csa.rank_bwt(i,c) , m_csa.rank_bwt(j,c) );
+        }
+
         //! Calculates the position of the i-th c.
         /*!
          *  \param i The i-th occurrence. \f$i\in [1..rank(size(),c)]\f$.
@@ -444,6 +450,12 @@ class bwt_of_csa_wt
         size_type rank(size_type i, const char_type c)const
         {
             return m_csa.rank_bwt(i, c);
+        }
+
+        std::pair<size_type,size_type> 
+        double_rank(size_type i,size_type j, value_type c) const 
+        {
+            return m_csa.wavelet_tree.double_rank(i,j,c);
         }
 
         //! Calculates the position of the i-th c.

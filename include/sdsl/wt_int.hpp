@@ -409,7 +409,36 @@ class wt_int
             return i;
         };
 
-
+        std::pair<size_type,size_type> 
+        double_rank(size_type i,size_type j, value_type c) const {
+            assert(i <= size());
+            assert(j <= size());
+            if (((1ULL)<<(m_max_level))<=c) { // c is greater than any symbol in wt
+                return {0,0};
+            }
+            size_type offset = 0;
+            uint64_t mask = (1ULL) << (m_max_level-1);
+            size_type node_size = m_size;
+            for (uint32_t k=0; k < m_max_level and (i or j); ++k) {
+                size_type ones_before_o   = m_tree_rank(offset);
+                size_type ones_before_i   = m_tree_rank(offset + i) - ones_before_o;
+                size_type ones_before_j   = m_tree_rank(offset + j) - ones_before_o;
+                size_type ones_before_end = m_tree_rank(offset + node_size) - ones_before_o;
+                if (c & mask) { // search for a one at this level
+                    offset += (node_size - ones_before_end);
+                    node_size = ones_before_end;
+                    i = ones_before_i;
+                    j = ones_before_j;
+                } else { // search for a zero at this level
+                    node_size = (node_size - ones_before_end);
+                    i = (i-ones_before_i);
+                    j = (j-ones_before_j);
+                }
+                offset += m_size;
+                mask >>= 1;
+            }
+            return {i,j};
+        };
 
         //! Calculates how many occurrences of symbol wt[i] are in the prefix [0..i-1] of the original sequence.
         /*!
