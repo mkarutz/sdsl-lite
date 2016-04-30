@@ -83,19 +83,21 @@ if( BUILTIN_POPCNT )
     endif()
 endif()
 
-#COMMENT REPLACED BY BIICODE
+# check for demangle support to get pretty C++ class names
+include(FindCxaDemangle)
+if( HAVE_CXA_DEMANGLE )
+    message(STATUS "Compiler supports DEMANGLE.")
+    if( CMAKE_COMPILER_IS_GNUCXX )
+        append_cxx_compiler_flags("DHAVE_CXA_DEMANGLE" "GCC" CMAKE_CXX_OPT_FLAGS)
+    else()
+        append_cxx_compiler_flags("DHAVE_CXA_DEMANGLE" "CLANG" CMAKE_CXX_OPT_FLAGS)
+    endif()
+endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Make.helper.cmake"
 		       "${CMAKE_CURRENT_SOURCE_DIR}/Make.helper" @ONLY)
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/lib/structure_tree.cpp.cmake"
                "${CMAKE_CURRENT_SOURCE_DIR}/lib/structure_tree.cpp" @ONLY)
-
-find_package(Git)
-if(GIT_FOUND)
-    message("git found: ${GIT_EXECUTABLE}")
-else()      
-    message(WARNING "git not found. Cloning of submodules will not work.")
-endif()
 
 add_subdirectory(external)
 add_subdirectory(include)
