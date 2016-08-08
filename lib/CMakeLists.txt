@@ -1,6 +1,7 @@
 include_directories(#"${CMAKE_CURRENT_SOURCE_DIR}/../include"
         "${CMAKE_CURRENT_BINARY_DIR}/../include"
         "${CMAKE_CURRENT_BINARY_DIR}/../external/libdivsufsort/include"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../external/FastPFor/headers"
         )
 
 
@@ -12,6 +13,7 @@ endif()
 set( sdsl_SRCS ${libFiles} ${headerFiles})
 
 add_library( sdsl ${sdsl_SRCS} )
+target_link_libraries( sdsl FastPFor)
 
 install(TARGETS sdsl
         RUNTIME DESTINATION bin
