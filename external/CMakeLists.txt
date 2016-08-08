@@ -27,7 +27,7 @@ add_subdirectory(googletest)
 
 ## Add FastPFor 
 set(FastPFor_dir ${CMAKE_CURRENT_LIST_DIR}/FastPFor)
-set(FastPFor_file ${gtest_dir}/CMakeLists.txt)
+set(FastPFor_file ${FastPFor_dir}/CMakeLists.txt)
 if(NOT EXISTS ${FastPFor_file})
     EXECUTE_PROCESS(COMMAND git submodule update --init external/FastPFor
                     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/..
