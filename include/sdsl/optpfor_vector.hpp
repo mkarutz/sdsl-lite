@@ -175,10 +175,14 @@ class optpfor_vector
                 size_t decoded_ids = 0;
                 __builtin_prefetch(&m_z[data_start]);
                 coder.decodeBlock(&m_z[data_start],&tmp[0],decoded_ids);
-                uint64_t sum = 0;
+                uint32_t sum = 0;
                 for (size_t j=0; j<sample_dens; j++) {
                     sum += tmp[j];
-                    *(it++) = sum;
+                    int32_t* sptr = (int32_t*) &sum;
+                    int64_t s64 = *sptr;
+                    uint64_t* u64p = (uint64_t*) &s64;
+                    uint64_t u64sw = *u64p;
+                    *(it++) = u64sw;
                 }
             }
         };
