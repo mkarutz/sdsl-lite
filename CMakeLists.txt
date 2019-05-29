@@ -26,6 +26,12 @@ set(LIBRARY_VERSION_FULL "${LIBRARY_VERSION}.${LIBRARY_VERSION_PATCH}")
 option(CODE_COVERAGE "Set ON to add code coverage compile options" OFF)
 option(GENERATE_DOC "Set ON to genrate doxygen API reference in build/doc directory" OFF)
 
+if( CMAKE_COMPILER_IS_GNUCXX )
+  append_cxx_compiler_flags("-fPIC" "GCC" CMAKE_CXX_FLAGS)
+else()
+  append_cxx_compiler_flags("-fPIC" "CLANG" CMAKE_CXX_FLAGS)
+endif()
+
 # C++11 compiler Check
 if(NOT CMAKE_CXX_COMPILER_VERSION) # work around for cmake versions smaller than 2.8.10
     execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE CMAKE_CXX_COMPILER_VERSION)
@@ -46,7 +52,7 @@ if( CMAKE_COMPILER_IS_GNUCXX )
     if ( CODE_COVERAGE )
         append_cxx_compiler_flags("-g -fprofile-arcs -ftest-coverage -lgcov" "GCC" CMAKE_CXX_FLAGS)
     endif()
-      
+
 else()
 	if(MSVC)
 		append_cxx_compiler_flags("/EHsc" "MSVC" CMAKE_CXX_FLAGS)
@@ -56,7 +62,7 @@ else()
         foreach(var ${vars})
             string(REPLACE "/MD" "-MT" ${var} "${${var}}")
         endforeach(var)
-        
+
 		add_definitions("/DMSVC_COMPILER")
 	else()
 		append_cxx_compiler_flags("-std=c++11 -DNDEBUG" "CLANG" CMAKE_CXX_FLAGS)
